@@ -16,7 +16,15 @@ export const LanguageSelect: React.FC<LanguageSelectProps> = () => {
       value={i18n.language}
       onChange={handleChange}
       displayEmpty
+      size="small"
       sx={{
+        flexShrink: 0,
+        minWidth: 52,
+        '& .MuiSelect-select': {
+          py: 0.75,
+          pl: 0.5,
+          pr: '28px !important',
+        },
         '& .MuiOutlinedInput-notchedOutline': {
           border: 'none',
         },

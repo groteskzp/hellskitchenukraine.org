@@ -8,7 +8,9 @@ interface MediaDeskProps {
   withBorderBRRadius?: boolean;
   withBorderTLRadius?: boolean;
   withBorderTRRadius?: boolean;
-  lnk?:string;
+  /** Standalone card (swiper slide): all corners rounded, no grid overlap. */
+  standalone?: boolean;
+  lnk?: string;
 }
 
 const MediaDesk: React.FC<MediaDeskProps> = ({
@@ -18,6 +20,7 @@ const MediaDesk: React.FC<MediaDeskProps> = ({
   withBorderBRRadius,
   withBorderTLRadius,
   withBorderTRRadius,
+  standalone,
   lnk,
 }) => {
   const theme = useTheme();
@@ -36,39 +39,40 @@ const MediaDesk: React.FC<MediaDeskProps> = ({
     return '167px';
   };
 
+  const radius = (flag?: boolean) =>
+    standalone || flag ? borderRadius : 0;
+
   return (
     <Box
       sx={{
         border: borderStyle,
-        borderBottomLeftRadius: withBorderBLRadius ? borderRadius : 0,
-        borderBottomRightRadius: withBorderBRRadius ? borderRadius : 0,
-        borderTopLeftRadius: withBorderTLRadius ? borderRadius : 0,
-        borderTopRightRadius: withBorderTRRadius ? borderRadius : 0,
+        borderBottomLeftRadius: radius(withBorderBLRadius),
+        borderBottomRightRadius: radius(withBorderBRRadius),
+        borderTopLeftRadius: radius(withBorderTLRadius),
+        borderTopRightRadius: radius(withBorderTRRadius),
         height: isDesktop ? '160px' : '104px',
-        marginLeft: -0.25,
-        marginTop: -0.25,
+        marginLeft: standalone ? 0 : -0.25,
+        marginTop: standalone ? 0 : -0.25,
         overflow: 'hidden',
         position: 'relative',
         width: getWidth(),
       }}
-    ><a href = {lnk}
-     target="_blank"
-    rel="noopener noreferrer"
     >
-      <CardMedia
-        alt={alt}
-        component="img"
-        image={imageUrl}
-        sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: isDesktop ? '178px' : '122px',
-          height: '56px',
-          objectFit: 'cover',
-        }}
-      />
+      <a href={lnk} target="_blank" rel="noopener noreferrer">
+        <CardMedia
+          alt={alt}
+          component="img"
+          image={imageUrl}
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: isDesktop ? '178px' : '122px',
+            height: '56px',
+            objectFit: 'cover',
+          }}
+        />
       </a>
     </Box>
   );

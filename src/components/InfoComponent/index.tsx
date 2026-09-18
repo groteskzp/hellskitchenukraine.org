@@ -151,9 +151,12 @@ export const InfoComponent: React.FC<InfoComponentProps> = ({
             variant === InfoComponentVariant.light
               ? theme.palette.white
               : theme.palette.black,
+          display: 'flex',
+          flex: 1,
+          flexDirection: 'column',
         }}
       >
-        <CardContent sx={{ px: 0 }}>
+        <CardContent sx={{ flex: 1, px: 0 }}>
           {renderTitle()}
           {renderCopies()}
         </CardContent>
