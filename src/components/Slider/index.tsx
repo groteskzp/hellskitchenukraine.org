@@ -20,8 +20,9 @@ import { IconButton, Theme, Typography, useTheme } from '@mui/material';
 import classnames from 'classnames';
 import SwiperCore from 'swiper';
 /* eslint-disable import/no-unresolved */
-import { A11y, Navigation, Pagination } from 'swiper/modules';
+import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Swiper } from 'swiper/react';
+import { AutoplayOptions } from 'swiper/types/modules/autoplay';
 import { NavigationOptions } from 'swiper/types/modules/navigation';
 import { PaginationOptions } from 'swiper/types/modules/pagination';
 import { SwiperModule } from 'swiper/types/shared';
@@ -33,6 +34,12 @@ import styles from './styles.module.css';
 
 SwiperCore.use([A11y]);
 
+const DEFAULT_AUTOPLAY: AutoplayOptions = {
+  delay: 2800,
+  disableOnInteraction: true,
+  pauseOnMouseEnter: true,
+};
+
 export interface SwiperSliderProps {
   initialSlide?: number;
   navigation?: boolean;
@@ -41,6 +48,7 @@ export interface SwiperSliderProps {
   slidesPerView?: number | 'auto';
   loop?: boolean;
   freeMode?: boolean;
+  autoplay?: boolean | AutoplayOptions;
   breakpoints?: SwiperOptions['breakpoints'];
   pagination?: boolean;
   className?: string;
@@ -56,6 +64,7 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
   title,
   loop,
   freeMode,
+  autoplay,
   children,
   className,
 }: SwiperSliderProps) => {
@@ -70,8 +79,19 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
     }
   }, [pendingRefInit]);
 
+  const autoplayOptions: AutoplayOptions | undefined = useMemo(() => {
+    if (!autoplay) return undefined;
+    if (autoplay === true) return DEFAULT_AUTOPLAY;
+
+    return { ...DEFAULT_AUTOPLAY, ...autoplay };
+  }, [autoplay]);
+
   const modules: SwiperModule[] = useMemo(() => {
     const modules: SwiperModule[] = [];
+
+    if (autoplayOptions) {
+      modules.push(Autoplay);
+    }
 
     if (navigation) {
       modules.push(Navigation);
@@ -82,7 +102,7 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
     }
 
     return modules;
-  }, [navigation, pagination]);
+  }, [autoplayOptions, navigation, pagination]);
 
   const navigationOptions: NavigationOptions | undefined = navigation
     ? {
@@ -138,6 +158,7 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
         </div>
       )}
       <Swiper
+        autoplay={autoplayOptions}
         breakpoints={breakpoints}
         children={Children.map(children, (child: ReactNode) => {
           if (!isValidElement(child)) {

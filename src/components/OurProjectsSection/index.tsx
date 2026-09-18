@@ -49,8 +49,24 @@ export const OurProjectSection: React.FC<OurProjectSectionProps> = () => {
     imageUrl,
     localizationPath,
   }: CardContent) => (
-    <Grid item xs={12} sm={6} md={4} key={t(`${localizationPath}.title`)}>
-      <Box style={{ borderRadius: '10px', overflow: 'hidden' }}>
+    <Grid
+      item
+      xs={12}
+      sm={6}
+      md={4}
+      key={t(`${localizationPath}.title`)}
+      sx={{ display: 'flex' }}
+    >
+      <Box
+        sx={{
+          borderRadius: '10px',
+          display: 'flex',
+          flex: 1,
+          flexDirection: 'column',
+          overflow: 'hidden',
+          width: '100%',
+        }}
+      >
         <ImageCard
           buttonText={t(`${localizationPath}.buttonText`)}
           imageUrl={imageUrl}
@@ -68,7 +84,7 @@ export const OurProjectSection: React.FC<OurProjectSectionProps> = () => {
         <Typography gutterBottom sx={{ mb: 5 }} variant={getTitleVariant()}>
           {t('homePage.ourProjects.projectsSectionTitle')}
         </Typography>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} alignItems="stretch">
           {cardContent.map(renderCard)}
         </Grid>
       </Container>

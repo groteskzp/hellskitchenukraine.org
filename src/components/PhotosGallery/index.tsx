@@ -151,6 +151,11 @@ export const PhotosGallery: React.FC<PhotosGalleryProps> = () => {
   return (
     <Box className={styles.gallery} style={{ margin: `${overlapMargin} 0` }}>
       <SwiperSlider
+        autoplay={{
+          delay: 2800,
+          disableOnInteraction: true,
+          pauseOnMouseEnter: true,
+        }}
         className={styles.slider}
         loop
         navigation
