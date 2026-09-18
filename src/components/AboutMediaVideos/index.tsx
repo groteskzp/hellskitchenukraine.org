@@ -1,6 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Container, Grid, Typography } from '@mui/material';
+import { Box, Container, Theme, useTheme } from '@mui/material';
+/* eslint-disable import/no-unresolved */
+import { SwiperSlide } from 'swiper/react';
+
+/* eslint-enable import/no-unresolved */
+import SwiperSlider from '../Slider';
+
+import styles from './styles.module.css';
 
 interface MediaVideo {
   embedUrl: string;
@@ -25,15 +32,33 @@ const mediaVideos: MediaVideo[] = [
 
 export const AboutMediaVideos: React.FC = () => {
   const { t } = useTranslation();
+  const theme: Theme = useTheme();
 
   return (
     <Container maxWidth="lg" sx={{ mt: { xs: 10, md: 20 }, mb: 10 }}>
-      <Typography variant="h2" sx={{ mb: { xs: 5, md: 8 } }}>
-        {t('homePage.mediaSection.title')}
-      </Typography>
-      <Grid container spacing={3}>
+      <SwiperSlider
+        breakpoints={{
+          [theme.breakpoints.values.xs]: {
+            slidesPerView: 1,
+          },
+          [theme.breakpoints.values.sm]: {
+            slidesPerView: 1.2,
+          },
+          [theme.breakpoints.values.md]: {
+            slidesPerView: 2,
+          },
+          [theme.breakpoints.values.lg]: {
+            slidesPerView: 2.5,
+          },
+        }}
+        className={styles.slider}
+        loop
+        navigation
+        spaceBetween={24}
+        title={t('homePage.mediaSection.title')}
+      >
         {mediaVideos.map((video) => (
-          <Grid item key={video.title} xs={12} md={6} lg={4}>
+          <SwiperSlide key={video.title} className={styles.slide}>
             <Box
               sx={{
                 borderRadius: '10px',
@@ -61,9 +86,9 @@ export const AboutMediaVideos: React.FC = () => {
                 }}
               />
             </Box>
-          </Grid>
+          </SwiperSlide>
         ))}
-      </Grid>
+      </SwiperSlider>
     </Container>
   );
 };

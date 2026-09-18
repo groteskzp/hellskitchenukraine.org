@@ -1,0 +1,16 @@
+.slider {
+	overflow: hidden;
+	width: 100%;
+}
+
+.slider > div:first-child {
+	margin-bottom: 24px;
+}
+
+.slide {
+	height: auto;
+}
+
+.slide iframe {
+	pointer-events: auto;
+}
