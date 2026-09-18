@@ -44,6 +44,8 @@ export const CONTINUOUS_AUTOPLAY: AutoplayOptions = {
   delay: 0,
   disableOnInteraction: false,
   pauseOnMouseEnter: true,
+  // Avoid transitionend auto-resume fighting our click/tap stop→start cycle.
+  waitForTransition: false,
 };
 
 export const CONTINUOUS_FREE_MODE: FreeModeOptions = {
@@ -105,15 +107,38 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
     }
   };
 
+  /**
+   * Click/tap pause for continuous ribbons.
+   * Must use stop()/start() — not pause()/resume().
+   * freeMode emits `_freeModeStaticRelease` on pointer up, which calls resume()
+   * whenever pause() set pausedByInteraction; that resumes immediately on the
+   * first release and then makes later clicks unable to stay paused.
+   */
   const pauseAndScheduleResume = () => {
     if (!continuous) return;
     const swiper = swiperRef.current;
     if (!swiper?.autoplay) return;
 
-    swiper.autoplay.pause();
     clearResumeTimer();
+
+    // Freeze the in-flight CSS transition so the ribbon stops now.
+    const translate = swiper.getTranslate();
+    swiper.setTransition(0);
+    swiper.setTranslate(translate);
+
+    if (swiper.autoplay.running) {
+      swiper.autoplay.stop();
+    }
+
     resumeTimerRef.current = window.setTimeout(() => {
-      swiperRef.current?.autoplay?.resume();
+      const active = swiperRef.current;
+      if (!active?.autoplay || active.destroyed) {
+        resumeTimerRef.current = null;
+        return;
+      }
+      if (!active.autoplay.running) {
+        active.autoplay.start();
+      }
       resumeTimerRef.current = null;
     }, INTERACTION_RESUME_MS);
   };
@@ -285,11 +310,12 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
         initialSlide={initialSlide}
         loop={loop}
         modules={modules}
-        onClick={continuous ? pauseAndScheduleResume : undefined}
         onSwiper={(swiper: SwiperCore) => {
           swiperRef.current = swiper;
         }}
-        onTouchEnd={continuous ? pauseAndScheduleResume : undefined}
+        // pointerdown/touchStart: pause immediately; click also resets the 3s timer
+        // after freeMode's touch-end release so a tap always ends paused + scheduled.
+        onClick={continuous ? pauseAndScheduleResume : undefined}
         onTouchStart={continuous ? pauseAndScheduleResume : undefined}
         pagination={paginationOptions}
         slidesPerView={slidesPerView || 'auto'}
