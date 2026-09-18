@@ -50,13 +50,11 @@ export const BannerSection: React.FC<BannerSectionProps> = ({
   };
 
   return (
-    <Box sx={{ display: 'relative' }}>
+    <Box sx={{ position: 'relative', width: '100%' }}>
       <Container
         sx={{
-          position: 'absolute',
           px: isMobileOnly ? 0 : undefined,
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
+          position: 'relative',
         }}
       >
         <Box style={getBoxStyle()}>

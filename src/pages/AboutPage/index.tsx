@@ -13,7 +13,7 @@ interface ProjectsProps {
 const Projects: React.FC<ProjectsProps> = () => (
   <>
     <AboutMediaVideos />
-    <Box sx={{ pt: 20, pb: 30 }}>
+    <Box sx={{ pt: { xs: 6, md: 10 }, pb: { xs: 10, md: 16 } }}>
       <BannerSection
         imageMobPath="images/bannerSection/mob/emblem.jpg"
         imagePath="images/bannerSection/web/emblem.jpg"

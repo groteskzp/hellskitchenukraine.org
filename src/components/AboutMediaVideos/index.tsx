@@ -35,7 +35,15 @@ export const AboutMediaVideos: React.FC = () => {
   const theme: Theme = useTheme();
 
   return (
-    <Container maxWidth="lg" sx={{ mt: { xs: 10, md: 20 }, mb: 10 }}>
+    <Container
+      maxWidth="lg"
+      sx={{
+        mt: { xs: 10, md: 20 },
+        mb: { xs: 6, md: 10 },
+        overflow: 'hidden',
+        pb: { xs: 2, md: 0 },
+      }}
+    >
       <SwiperSlider
         breakpoints={{
           [theme.breakpoints.values.xs]: {
@@ -59,15 +67,7 @@ export const AboutMediaVideos: React.FC = () => {
       >
         {mediaVideos.map((video) => (
           <SwiperSlide key={video.title} className={styles.slide}>
-            <Box
-              sx={{
-                borderRadius: '10px',
-                overflow: 'hidden',
-                position: 'relative',
-                pt: '56.25%',
-                width: '100%',
-              }}
-            >
+            <Box className={styles.videoFrame}>
               <Box
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
@@ -76,14 +76,6 @@ export const AboutMediaVideos: React.FC = () => {
                 loading="lazy"
                 src={video.embedUrl}
                 title={video.title}
-                sx={{
-                  border: 0,
-                  height: '100%',
-                  left: 0,
-                  position: 'absolute',
-                  top: 0,
-                  width: '100%',
-                }}
               />
             </Box>
           </SwiperSlide>

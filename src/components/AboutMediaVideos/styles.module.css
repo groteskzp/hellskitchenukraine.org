@@ -1,4 +1,6 @@
+/* stylelint-disable selector-class-pattern */
 .slider {
+	margin-bottom: 16px;
 	overflow: hidden;
 	width: 100%;
 }
@@ -7,10 +9,37 @@
 	margin-bottom: 24px;
 }
 
+/* Shared Slider uses overflow:visible + 100vw; contain height/bleed on About. */
+.slider :global(.swiper) {
+	overflow: hidden;
+	width: 100%;
+}
+
+.slider :global(.swiper-wrapper) {
+	align-items: stretch;
+}
+/* stylelint-enable selector-class-pattern */
+
 .slide {
+	box-sizing: border-box;
 	height: auto;
 }
 
-.slide iframe {
+.videoFrame {
+	aspect-ratio: 16 / 9;
+	background-color: #000;
+	border-radius: 10px;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+}
+
+.videoFrame iframe {
+	border: 0;
+	height: 100%;
+	left: 0;
 	pointer-events: auto;
+	position: absolute;
+	top: 0;
+	width: 100%;
 }
