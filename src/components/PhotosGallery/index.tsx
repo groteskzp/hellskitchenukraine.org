@@ -5,7 +5,7 @@ import { SwiperSlide } from 'swiper/react';
 
 /* eslint-enable import/no-unresolved */
 import { ImageComponent } from '../ImageComponent';
-import SwiperSlider from '../Slider';
+import SwiperSlider, { CONTINUOUS_SPEED } from '../Slider';
 
 import styles from './styles.module.css';
 
@@ -151,16 +151,13 @@ export const PhotosGallery: React.FC<PhotosGalleryProps> = () => {
   return (
     <Box className={styles.gallery} style={{ margin: `${overlapMargin} 0` }}>
       <SwiperSlider
-        autoplay={{
-          delay: 2800,
-          disableOnInteraction: true,
-          pauseOnMouseEnter: true,
-        }}
         className={styles.slider}
+        continuous
         loop
         navigation
         slidesPerView="auto"
         spaceBetween={20}
+        speed={CONTINUOUS_SPEED}
       >
         {content.map(({ alt, src, srcMob, width, widthMob }) => {
           const slideWidth = isDesktop ? width : widthMob;

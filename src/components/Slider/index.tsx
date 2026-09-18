@@ -20,9 +20,10 @@ import { IconButton, Theme, Typography, useTheme } from '@mui/material';
 import classnames from 'classnames';
 import SwiperCore from 'swiper';
 /* eslint-disable import/no-unresolved */
-import { A11y, Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { A11y, Autoplay, FreeMode, Navigation, Pagination } from 'swiper/modules';
 import { Swiper } from 'swiper/react';
 import { AutoplayOptions } from 'swiper/types/modules/autoplay';
+import { FreeModeOptions } from 'swiper/types/modules/free-mode';
 import { NavigationOptions } from 'swiper/types/modules/navigation';
 import { PaginationOptions } from 'swiper/types/modules/pagination';
 import { SwiperModule } from 'swiper/types/shared';
@@ -40,6 +41,20 @@ const DEFAULT_AUTOPLAY: AutoplayOptions = {
   pauseOnMouseEnter: true,
 };
 
+/** Continuous ribbon: freeMode + delay 0 + linear easing (no discrete slide jumps). */
+export const CONTINUOUS_AUTOPLAY: AutoplayOptions = {
+  delay: 0,
+  disableOnInteraction: false,
+  pauseOnMouseEnter: true,
+};
+
+export const CONTINUOUS_FREE_MODE: FreeModeOptions = {
+  enabled: true,
+  momentum: false,
+};
+
+export const CONTINUOUS_SPEED = 6000;
+
 export interface SwiperSliderProps {
   initialSlide?: number;
   navigation?: boolean;
@@ -47,12 +62,16 @@ export interface SwiperSliderProps {
   title?: ReactNode;
   slidesPerView?: number | 'auto';
   loop?: boolean;
-  freeMode?: boolean;
+  freeMode?: boolean | FreeModeOptions;
   autoplay?: boolean | AutoplayOptions;
   breakpoints?: SwiperOptions['breakpoints'];
   pagination?: boolean;
   className?: string;
   spaceBetween?: number;
+  /** Transition duration in ms. Use ~6000 with continuous autoplay for a smooth ribbon. */
+  speed?: number;
+  /** freeMode + linear wrapper easing for infinite continuous scroll. */
+  continuous?: boolean;
 }
 export const SwiperSlider: FC<SwiperSliderProps> = ({
   initialSlide,
@@ -67,6 +86,8 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
   autoplay,
   children,
   className,
+  speed,
+  continuous,
 }: SwiperSliderProps) => {
   const [pendingRefInit, setPendingRefInit] = useState(true);
   const nextEl: MutableRefObject<HTMLButtonElement | null> = useRef(null);
@@ -80,17 +101,38 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
   }, [pendingRefInit]);
 
   const autoplayOptions: AutoplayOptions | undefined = useMemo(() => {
+    if (continuous) {
+      if (autoplay === false) return undefined;
+      if (autoplay && typeof autoplay === 'object') {
+        return { ...CONTINUOUS_AUTOPLAY, ...autoplay };
+      }
+      return CONTINUOUS_AUTOPLAY;
+    }
     if (!autoplay) return undefined;
     if (autoplay === true) return DEFAULT_AUTOPLAY;
 
     return { ...DEFAULT_AUTOPLAY, ...autoplay };
-  }, [autoplay]);
+  }, [autoplay, continuous]);
+
+  const freeModeOptions: boolean | FreeModeOptions | undefined = useMemo(() => {
+    if (continuous) {
+      if (freeMode && typeof freeMode === 'object') {
+        return { ...CONTINUOUS_FREE_MODE, ...freeMode };
+      }
+      return CONTINUOUS_FREE_MODE;
+    }
+    return freeMode;
+  }, [continuous, freeMode]);
 
   const modules: SwiperModule[] = useMemo(() => {
     const modules: SwiperModule[] = [];
 
     if (autoplayOptions) {
       modules.push(Autoplay);
+    }
+
+    if (freeModeOptions) {
+      modules.push(FreeMode);
     }
 
     if (navigation) {
@@ -102,7 +144,7 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
     }
 
     return modules;
-  }, [autoplayOptions, navigation, pagination]);
+  }, [autoplayOptions, freeModeOptions, navigation, pagination]);
 
   const navigationOptions: NavigationOptions | undefined = navigation
     ? {
@@ -121,8 +163,16 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
       }
     : undefined;
 
+  const swiperSpeed = speed ?? (continuous ? CONTINUOUS_SPEED : 800);
+
   return (
-    <div className={classnames(styles.wrapper, className)}>
+    <div
+      className={classnames(
+        styles.wrapper,
+        continuous && styles.continuous,
+        className,
+      )}
+    >
       {(navigation || title) && (
         <div className={styles.header}>
           {title && <Typography variant="h2">{title}</Typography>}
@@ -167,7 +217,7 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
           return cloneElement(child);
         })}
         className={styles.swiper}
-        freeMode={freeMode}
+        freeMode={freeModeOptions}
         initialSlide={initialSlide}
         loop={loop}
         modules={modules}
@@ -175,7 +225,7 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
         pagination={paginationOptions}
         slidesPerView={slidesPerView || 'auto'}
         spaceBetween={spaceBetween || 0}
-        speed={800}
+        speed={swiperSpeed}
       />
       {pagination && (
         <div

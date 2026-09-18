@@ -9,6 +9,11 @@
 	overflow: hidden;
 }
 
+/* Continuous ribbon: keep velocity constant (no ease-in/out between slides). */
+.continuous :global(.swiper-wrapper) {
+	transition-timing-function: linear !important;
+}
+
 .header {
 	align-items: center;
 	display: flex;
