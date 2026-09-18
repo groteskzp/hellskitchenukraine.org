@@ -13,7 +13,7 @@ import MediaDesk from '../MediaDesk';
 interface MediaContent {
   alt: string;
   imageUrl: string;
-  lnk?:string;
+  lnk?: string;
   withBorderBLRadius?: boolean;
   withBorderBRRadius?: boolean;
   withBorderTLRadius?: boolean;
@@ -32,80 +32,57 @@ export const MediaContent: React.FC = () => {
   const isBigDesktop = useMediaQuery(theme.breakpoints.between(1228, 'lg'));
   const isLarge = useMediaQuery(theme.breakpoints.up('lg'));
 
+  // Outer-corner radii for the 8-logo grid after removing logos without links.
+  // Approx columns: mobile 2, smallTablet 3, tablet/desktop/lg 4, largeTablet/bigDesktop 5.
   const mediaContents: MediaContent[] = [
     {
       alt: 'Накипіло',
       imageUrl: '/images/media/Nakypilo.png',
       withBorderTLRadius: true,
-      lnk:'https://nakypilo.ua/foto/vid-pryhotuvannia-yizhi-do-zabyvannia-vikon-pekelne-volonterstvo-v-kharkovi/',
+      lnk: 'https://nakypilo.ua/foto/vid-pryhotuvannia-yizhi-do-zabyvannia-vikon-pekelne-volonterstvo-v-kharkovi/',
     },
     {
       alt: 'Kharkiv Today',
       imageUrl: '/images/media/Kharkiv_today.png',
-      withBorderTLRadius: true,
-      lnk:'https://2day.kh.ua/ua',
+      withBorderTRRadius: isMobile,
+      lnk: 'https://2day.kh.ua/ua',
     },
     {
       alt: 'TVP info',
       imageUrl: '/images/media/tvp_info.png',
-      withBorderTLRadius: true,
-      lnk:'https://www.youtube.com/watch?v=rNza1XUjbK4',
+      withBorderTRRadius: isSmallTablet,
+      lnk: 'https://www.youtube.com/watch?v=rNza1XUjbK4',
     },
     {
       alt: 'AHT',
       imageUrl: '/images/media/AHT.png',
-      withBorderTLRadius: true,
-      lnk:'https://www.youtube.com/watch?v=Eii4EB5TyIs',
+      withBorderTRRadius: isTablet || isDesktop || isLarge,
+      lnk: 'https://www.youtube.com/watch?v=Eii4EB5TyIs',
     },
     {
       alt: 'Berlin',
       imageUrl: '/images/media/Berlin.png',
-      withBorderTLRadius: true,
-      lnk:'https://www.berlin.de/ba-steglitz-zehlendorf/politik-und-verwaltung/beauftragte/partnerstaedte/artikel.1474356.php',
-    },
-    {
-      alt: 'Media 1+1',
-      imageUrl: '/images/media/1+1.png',
-      withBorderTLRadius: true,
-      lnk:'',
-    },
-    {
-      alt: 'Media DW',
-      imageUrl: '/images/media/dw@.png',
-      withBorderTRRadius: isMobile,
+      withBorderTRRadius: isLargeTablet || isBigDesktop,
+      withBorderBLRadius: isTablet || isDesktop || isLarge,
+      lnk: 'https://www.berlin.de/ba-steglitz-zehlendorf/politik-und-verwaltung/beauftragte/partnerstaedte/artikel.1474356.php',
     },
     {
       alt: 'Media TCH',
       imageUrl: '/images/media/tch.png',
-      withBorderTRRadius: isSmallTablet,
-      lnk:'https://tsn.ua/video/video-novini/goduyut-lyudey-iz-pershiy-obstriliv-yak-pekelna-kuhnya-u-harkovi-ryatuye-viyskovih-ditey-i-poranenih.html',
-    },
-    {
-      alt: 'Media DOU',
-      imageUrl: '/images/media/dou.png',
-      withBorderBRRadius: isTablet || isDesktop || isLarge,
-      withBorderTRRadius: isTablet || isDesktop || isLarge,
+      withBorderBLRadius: isLargeTablet || isBigDesktop,
+      lnk: 'https://tsn.ua/video/video-novini/goduyut-lyudey-iz-pershiy-obstriliv-yak-pekelna-kuhnya-u-harkovi-ryatuye-viyskovih-ditey-i-poranenih.html',
     },
     {
       alt: 'Media Suspilne Kharkiv',
       imageUrl: '/images/media/suspilne_kharkiv.png',
-      withBorderBLRadius: isTablet || isDesktop || isLarge,
-      withBorderBRRadius: isLargeTablet || isBigDesktop,
-      withBorderTRRadius: isLargeTablet || isBigDesktop,
-      lnk:'https://suspilne.media/kharkiv/298630-pekelna-kuhna-ak-harkivski-volonteri-gotuut-dla-medikiv-ta-vijskovih/',
-    },
-    {
-      alt: 'Media Suspilne News',
-      imageUrl: '/images/media/suspilne_news.png',
-      withBorderBLRadius: isLargeTablet,
-      withBorderBRRadius: isMobile || isSmallTablet,
+      withBorderBLRadius: isMobile || isSmallTablet,
+      lnk: 'https://suspilne.media/kharkiv/298630-pekelna-kuhna-ak-harkivski-volonteri-gotuut-dla-medikiv-ta-vijskovih/',
     },
     {
       alt: 'Media Freedom',
       imageUrl: '/images/media/freedom.png',
-      withBorderBLRadius: isMobile || isSmallTablet,
       withBorderBRRadius: true,
-      lnk:'https://uatv.ua/uk/pekelna-kuhnya-u-harkovi-z-pershogo-dnya-vijny-volontery-gotuyut-dlya-ukrayinskyh-vijskovyh-video/',
+      lnk: 'https://uatv.ua/uk/pekelna-kuhnya-u-harkovi-z-pershogo-dnya-vijny-volontery-gotuyut-dlya-ukrayinskyh-vijskovyh-video/',
     },
   ];
 

@@ -13,7 +13,6 @@ import { OurProjectSection } from '../../components/OurProjectsSection';
 import { PartnerSection } from '../../components/PartnersSection';
 import { PhotosGallery } from '../../components/PhotosGallery';
 import { ResultsSection } from '../../components/ResultsSection';
-import { RewardsSection } from '../../components/RewardsSection';
 import { withHeaderFooter } from '../../hoc/withHeaderFooter';
 
 interface HomePageProps {}
@@ -45,7 +44,6 @@ const HomePage: React.FC<HomePageProps> = () => {
       <MediaContent />
       <HelpSection />
       {/* <NewsSection /> */}
-      <RewardsSection />
       <BannerSectionJoin
         imageMobPath="images/bannerSection/mob/emblem.jpg"
         imagePath="images/bannerSection/web/emblem.jpg"

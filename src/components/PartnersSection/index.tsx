@@ -27,19 +27,19 @@ export const PartnerSection: React.FC<PartnerSectionProps> = () => {
       alt: 'NOVA Ukraine logo',
       src: `${imagesPath}/web/novaUkraine.png`,
       srcMob: `${imagesPath}/mob/novaUkraine.png`,
-      link: ``,
+      link: `https://novaukraine.org/`,
     },
     {
       alt: 'World Central Kitchen logo',
       src: `${imagesPath}/web/worldCentralKitchen.png`,
       srcMob: `${imagesPath}/mob/worldCentralKitchen.png`,
-      link: ``,
+      link: `https://wck.org/`,
     },
     {
       alt: 'Lion defence team logo',
       src: `${imagesPath}/web/lion.png`,
       srcMob: `${imagesPath}/mob/lion.png`,
-      link: ``,
+      link: `https://liondefenceteam.com/`,
     },
     // {
     //   alt: 'Steglitz-Zehlendorf',
