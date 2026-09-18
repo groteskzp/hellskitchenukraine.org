@@ -10,6 +10,7 @@ import React, {
   isValidElement,
   MutableRefObject,
   ReactNode,
+  useEffect,
   useMemo,
   useRef,
 } from 'react';
@@ -43,6 +44,8 @@ export const CONTINUOUS_AUTOPLAY: AutoplayOptions = {
   delay: 0,
   disableOnInteraction: false,
   pauseOnMouseEnter: true,
+  // Avoid transitionend auto-resume fighting our click/tap stop→start cycle.
+  waitForTransition: false,
 };
 
 export const CONTINUOUS_FREE_MODE: FreeModeOptions = {
@@ -51,6 +54,9 @@ export const CONTINUOUS_FREE_MODE: FreeModeOptions = {
 };
 
 export const CONTINUOUS_SPEED = 6000;
+
+/** After click/pointer/touch pause, resume continuous autoplay. */
+const INTERACTION_RESUME_MS = 3000;
 
 /** Nudge distance for continuous freeMode arrows (keeps ribbon smooth, still responds). */
 const CONTINUOUS_NUDGE_MS = 450;
@@ -90,8 +96,65 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
   continuous,
 }: SwiperSliderProps) => {
   const swiperRef: MutableRefObject<SwiperCore | null> = useRef(null);
+  const resumeTimerRef = useRef<number | null>(null);
   const theme: Theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const clearResumeTimer = () => {
+    if (resumeTimerRef.current != null) {
+      window.clearTimeout(resumeTimerRef.current);
+      resumeTimerRef.current = null;
+    }
+  };
+
+  // stop()/start() — pause() sets pausedByInteraction and freeMode's
+  // `_freeModeStaticRelease` on pointer-up immediately resume()s it.
+  const pauseAndScheduleResume = () => {
+    if (!continuous) return;
+    const swiper = swiperRef.current;
+    if (!swiper?.autoplay) return;
+
+    clearResumeTimer();
+
+    const freezeRibbon = () => {
+      const active = swiperRef.current;
+      if (!active || active.destroyed) return;
+      // delay:0 queues slideNext on rAF; stop() does not cancel that rAF.
+      const translate = active.getTranslate();
+      active.setTransition(0);
+      active.setTranslate(translate);
+      // loop + animating blocks the next slideNext after start().
+      active.animating = false;
+    };
+
+    freezeRibbon();
+
+    if (swiper.autoplay.running) {
+      swiper.autoplay.stop();
+    }
+
+    // Catch a slideNext already scheduled on rAF before stop(); Swiper does
+    // not cancel that handle. Double-rAF covers slideNext's own rAF proceed.
+    window.requestAnimationFrame(() => {
+      freezeRibbon();
+      window.requestAnimationFrame(freezeRibbon);
+    });
+
+    resumeTimerRef.current = window.setTimeout(() => {
+      const active = swiperRef.current;
+      if (!active?.autoplay || active.destroyed) {
+        resumeTimerRef.current = null;
+        return;
+      }
+      if (!active.autoplay.running) {
+        active.animating = false;
+        active.autoplay.start();
+      }
+      resumeTimerRef.current = null;
+    }, INTERACTION_RESUME_MS);
+  };
+
+  useEffect(() => () => clearResumeTimer(), []);
 
   const autoplayOptions: AutoplayOptions | undefined = useMemo(() => {
     if (continuous) {
@@ -261,6 +324,10 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
         onSwiper={(swiper: SwiperCore) => {
           swiperRef.current = swiper;
         }}
+        // pointerdown/touchStart: pause immediately; click also resets the 3s timer
+        // after freeMode's touch-end release so a tap always ends paused + scheduled.
+        onClick={continuous ? pauseAndScheduleResume : undefined}
+        onTouchStart={continuous ? pauseAndScheduleResume : undefined}
         pagination={paginationOptions}
         slidesPerView={slidesPerView || 'auto'}
         spaceBetween={spaceBetween || 0}

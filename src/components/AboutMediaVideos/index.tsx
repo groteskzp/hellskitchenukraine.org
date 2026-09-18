@@ -61,7 +61,6 @@ export const AboutMediaVideos: React.FC = () => {
         }}
         className={styles.slider}
         loop
-        navigation
         spaceBetween={24}
         title={t('homePage.mediaSection.title')}
       >

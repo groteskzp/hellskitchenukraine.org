@@ -154,7 +154,6 @@ export const PhotosGallery: React.FC<PhotosGalleryProps> = () => {
         className={styles.slider}
         continuous
         loop
-        navigation
         slidesPerView="auto"
         spaceBetween={20}
         speed={CONTINUOUS_SPEED}
