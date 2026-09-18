@@ -37,14 +37,32 @@ export const ImageCard: React.FC<ImageCardProps> = ({
   };
 
   return (
-    <Paper elevation={0} style={getPaperStyle()} sx={{ pb: 4 }}>
+    <Paper
+      elevation={0}
+      style={getPaperStyle()}
+      sx={{
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
+        height: '100%',
+        pb: 4,
+      }}
+    >
       <ImageComponent
         alt={title}
         src={imageUrl}
         style={{ height: isDesktop ? '340px' : '232px' }}
         withBorder={withBorder}
       />
-      <Box sx={{ px: withIndent ? 4 : 0, pt: 4 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flex: 1,
+          flexDirection: 'column',
+          px: withIndent ? 4 : 0,
+          pt: 4,
+        }}
+      >
         <InfoComponent
           buttonText={buttonText}
           copies={[text]}

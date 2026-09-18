@@ -1,0 +1,23 @@
+.gallery {
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	z-index: 2;
+}
+
+.slider :global(.swiper) {
+	overflow: visible;
+	padding: 0 16px;
+	position: relative;
+	width: 100%;
+}
+
+.slide {
+	height: 100%;
+}
+
+.slideImage {
+	display: block;
+	height: 100%;
+	width: 100%;
+}

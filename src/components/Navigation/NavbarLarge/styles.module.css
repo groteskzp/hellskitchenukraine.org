@@ -10,8 +10,19 @@
   flex: none;
   list-style: none;
   margin: 0;
+  padding: 0;
 }
 
 .listItem {
-  margin-right: 20px;
+  margin-right: 8px;
+}
+
+.listItem:last-child {
+  margin-right: 0;
+}
+
+@media (min-width: 1680px) {
+  .listItem {
+    margin-right: 20px;
+  }
 }

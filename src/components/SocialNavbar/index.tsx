@@ -53,6 +53,7 @@ export const SocialNavbar: React.FC<SocialNavbarProps> = ({
         component="a"
         href={link}
         key={link}
+        size="small"
         style={{ color: isWhite ? theme.palette.white : theme.palette.black }}
         target="_blank"
       >

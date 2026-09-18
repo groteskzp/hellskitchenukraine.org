@@ -25,14 +25,14 @@ export const Header: React.FC<HeaderProps> = ({ isBlue }) => {
   const theme = useTheme();
   const { t } = useTranslation();
 
+  // Desktop (md ≥1024): horizontal NavbarLarge. Below: hamburger only.
+  // Previously gated at xl (≥1680), which hid the menu on typical laptops.
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
-  const isLarge = useMediaQuery(theme.breakpoints.up('xl'));
-  const isWideScreen = useMediaQuery(theme.breakpoints.up('xl'));
 
   const renderLogo = () => (
     <Box
       style={{
-        marginRight: isLarge ? '0' : 'auto',
+        marginRight: isDesktop ? '0' : 'auto',
         width: isDesktop ? '164px' : '90px',
         minWidth: isDesktop ? '164px' : '90px',
       }}
@@ -54,7 +54,7 @@ export const Header: React.FC<HeaderProps> = ({ isBlue }) => {
       <Container maxWidth="lg">
         <Toolbar style={{ minHeight: isDesktop ? '98px' : '60px', padding: 0 }}>
           {renderLogo()}
-          {isWideScreen && <NavbarLarge />}
+          {isDesktop && <NavbarLarge />}
           {isDesktop && (
             <SocialNavbar
               instagramLink={LINKS.instagramLink}
@@ -63,14 +63,14 @@ export const Header: React.FC<HeaderProps> = ({ isBlue }) => {
           )}
           {isDesktop && <LanguageSelect />}
           {isDesktop && (
-            <Box sx={{ ml: 2, mr: 2 }}>
+            <Box sx={{ ml: 1, mr: 0, flexShrink: 0 }}>
               <ButtonComponent
                 size={ButtonSize.small}
                 textButton={t('navigation.support')}
               />
             </Box>
           )}
-          {!isWideScreen && <Navbar />}
+          {!isDesktop && <Navbar />}
         </Toolbar>
       </Container>
     </AppBar>

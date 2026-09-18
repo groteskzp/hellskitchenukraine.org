@@ -56,8 +56,6 @@ export const ContactForm: React.FC = () => {
         maxWidth: "500px",
         margin: "0 auto",
         padding: "24px",
-        border: "1px solid #ddd",
-        borderRadius: "12px",
       }}
     >
       <h2>Форма зворотного зв'язку</h2>
@@ -90,7 +88,7 @@ export const ContactForm: React.FC = () => {
             htmlFor="contactperson"
             style={{ display: "block", marginBottom: "8px" }}
           >
-            Контакнта особа
+            Контактна особа
           </label>
 
           <input

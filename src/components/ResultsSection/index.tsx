@@ -50,7 +50,7 @@ export const ResultsSection: FC = () => {
       style={{ overflow: 'hidden' }}
     >
       <Grid container spacing={4}>
-        <Grid item xs={12} lg={4}>
+        <Grid item xs={12} lg={4} sx={{ alignSelf: { lg: 'flex-start' } }}>
           <InfoComponent
             copies={[t(`${localizationPath}.seeInteresting`)]}
             title={t(`${localizationPath}.title`)}
