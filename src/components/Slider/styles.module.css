@@ -21,10 +21,16 @@
 	gap: 40px;
 	justify-content: space-between;
 	margin-bottom: 70px;
+	pointer-events: auto;
+	position: relative;
+	z-index: 3;
 }
 
 .navigation {
 	margin-left: auto;
+	pointer-events: auto;
+	position: relative;
+	z-index: 3;
 }
  
 .paginationContainer {

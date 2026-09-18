@@ -19,8 +19,10 @@ export const QrCard: React.FC<QrCardProps> = ({
     <Paper
       elevation={0}
       sx={{
+        boxSizing: 'border-box',
         width: '100%',
-        maxWidth: { xs: '100%', sm: 360, md: 400 },
+        maxWidth: 420,
+        mx: 'auto',
         p: { xs: 2, sm: 3 },
         borderRadius: 6,
         textAlign: 'center',
@@ -106,7 +108,8 @@ export const QrCard: React.FC<QrCardProps> = ({
       sx={{
         display: 'block',
         width: '100%',
-        maxWidth: { xs: '100%', sm: 360, md: 400 },
+        maxWidth: 420,
+        mx: 'auto',
         color: 'inherit',
       }}
     >

@@ -88,7 +88,7 @@ export const ContactForm: React.FC = () => {
             htmlFor="contactperson"
             style={{ display: "block", marginBottom: "8px" }}
           >
-            Контакнта особа
+            Контактна особа
           </label>
 
           <input

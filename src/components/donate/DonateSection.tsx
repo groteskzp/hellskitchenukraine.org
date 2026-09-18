@@ -1,8 +1,11 @@
 import React from 'react';
-import { Box, Grid } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 
 import { DonateForm } from './DonateForm';
 import { DonateQrBlock } from './DonateQrBlock';
+
+/** Match WayForPay form width so Privat QR aligns consistently. */
+const DONATE_COLUMN_MAX_WIDTH = 420;
 
 export const DonateSection = () => (
   <Box
@@ -11,53 +14,36 @@ export const DonateSection = () => (
       px: { xs: 1.5, sm: 4 },
       maxWidth: 1400,
       mx: 'auto',
+      width: '100%',
     }}
   >
-    <Grid
-      container
-      spacing={{ xs: 4, md: 8, lg: 10 }}
-      justifyContent="center"
-      alignItems="flex-start"
+    <Stack
+      spacing={{ xs: 4, md: 6 }}
+      alignItems="center"
+      sx={{ width: '100%' }}
     >
-      <Grid
-        item
-        xs={12}
-        md={10}
-        lg={5}
+      <Box
         sx={{
-          position: { lg: 'sticky' },
-          top: { lg: 100 },
+          width: '100%',
+          maxWidth: DONATE_COLUMN_MAX_WIDTH,
           display: 'flex',
           justifyContent: 'center',
-          mb: { xs: 2, md: 0 },
         }}
       >
         <DonateForm />
-      </Grid>
+      </Box>
 
-      <Grid
-        item
-        xs={12}
-        md={12}
-        lg={6}
+      <Box
         sx={{
+          width: '100%',
+          maxWidth: DONATE_COLUMN_MAX_WIDTH,
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center',
+          mx: 'auto',
         }}
       >
-        <Box
-          sx={{
-            width: '100%',
-
-            maxWidth: { xs: '100%', md: 800, lg: 500 },
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          <DonateQrBlock />
-        </Box>
-      </Grid>
-    </Grid>
+        <DonateQrBlock />
+      </Box>
+    </Stack>
   </Box>
 );

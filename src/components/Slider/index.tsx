@@ -10,21 +10,18 @@ import React, {
   isValidElement,
   MutableRefObject,
   ReactNode,
-  useEffect,
   useMemo,
   useRef,
-  useState,
 } from 'react';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
-import { IconButton, Theme, Typography, useTheme } from '@mui/material';
+import { IconButton, Theme, Typography, useMediaQuery, useTheme } from '@mui/material';
 import classnames from 'classnames';
 import SwiperCore from 'swiper';
 /* eslint-disable import/no-unresolved */
-import { A11y, Autoplay, FreeMode, Navigation, Pagination } from 'swiper/modules';
+import { A11y, Autoplay, FreeMode, Pagination } from 'swiper/modules';
 import { Swiper } from 'swiper/react';
 import { AutoplayOptions } from 'swiper/types/modules/autoplay';
 import { FreeModeOptions } from 'swiper/types/modules/free-mode';
-import { NavigationOptions } from 'swiper/types/modules/navigation';
 import { PaginationOptions } from 'swiper/types/modules/pagination';
 import { SwiperModule } from 'swiper/types/shared';
 import { SwiperOptions } from 'swiper/types/swiper-options';
@@ -54,6 +51,9 @@ export const CONTINUOUS_FREE_MODE: FreeModeOptions = {
 };
 
 export const CONTINUOUS_SPEED = 6000;
+
+/** Nudge distance for continuous freeMode arrows (keeps ribbon smooth, still responds). */
+const CONTINUOUS_NUDGE_MS = 450;
 
 export interface SwiperSliderProps {
   initialSlide?: number;
@@ -89,16 +89,9 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
   speed,
   continuous,
 }: SwiperSliderProps) => {
-  const [pendingRefInit, setPendingRefInit] = useState(true);
-  const nextEl: MutableRefObject<HTMLButtonElement | null> = useRef(null);
-  const prevEl: MutableRefObject<HTMLButtonElement | null> = useRef(null);
+  const swiperRef: MutableRefObject<SwiperCore | null> = useRef(null);
   const theme: Theme = useTheme();
-
-  useEffect(() => {
-    if (pendingRefInit) {
-      setPendingRefInit(false);
-    }
-  }, [pendingRefInit]);
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const autoplayOptions: AutoplayOptions | undefined = useMemo(() => {
     if (continuous) {
@@ -135,24 +128,12 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
       modules.push(FreeMode);
     }
 
-    if (navigation) {
-      modules.push(Navigation);
-    }
-
     if (pagination) {
       modules.push(Pagination);
     }
 
     return modules;
-  }, [autoplayOptions, freeModeOptions, navigation, pagination]);
-
-  const navigationOptions: NavigationOptions | undefined = navigation
-    ? {
-        nextEl: nextEl.current,
-        prevEl: prevEl.current,
-        lockClass: 'locked',
-      }
-    : undefined;
+  }, [autoplayOptions, freeModeOptions, pagination]);
 
   const paginationOptions: PaginationOptions | undefined = pagination
     ? {
@@ -164,6 +145,68 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
     : undefined;
 
   const swiperSpeed = speed ?? (continuous ? CONTINUOUS_SPEED : 800);
+
+  const nudgeContinuous = (direction: 1 | -1) => {
+    const swiper = swiperRef.current;
+    if (!swiper) return;
+
+    const space =
+      typeof swiper.params.spaceBetween === 'number'
+        ? swiper.params.spaceBetween
+        : 0;
+    const activeSize = swiper.slidesSizesGrid?.[swiper.activeIndex] ?? 0;
+    const delta =
+      activeSize > 0
+        ? activeSize + space
+        : Math.max(swiper.width * 0.75, 160);
+
+    swiper.autoplay?.pause();
+    swiper.setTransition(CONTINUOUS_NUDGE_MS);
+    swiper.setTranslate(swiper.getTranslate() - direction * delta);
+    swiper.updateProgress();
+    swiper.updateActiveIndex();
+    if (swiper.params.loop) {
+      swiper.loopFix();
+    }
+
+    window.setTimeout(() => {
+      swiper.autoplay?.resume();
+    }, CONTINUOUS_NUDGE_MS + 50);
+  };
+
+  const handlePrev = (event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (continuous) {
+      nudgeContinuous(-1);
+      return;
+    }
+    swiperRef.current?.slidePrev();
+  };
+
+  const handleNext = (event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (continuous) {
+      nudgeContinuous(1);
+      return;
+    }
+    swiperRef.current?.slideNext();
+  };
+
+  const navButtonStyle = {
+    color: theme.palette.icon,
+    border: `2px solid ${theme.palette.icon}`,
+    borderRadius: '10px',
+    padding: isMobile ? '16px' : '14px',
+    minWidth: isMobile ? 48 : undefined,
+    minHeight: isMobile ? 48 : undefined,
+    position: 'relative' as const,
+    zIndex: 3,
+    pointerEvents: 'auto' as const,
+    touchAction: 'manipulation' as const,
+    WebkitTapHighlightColor: 'transparent',
+  };
 
   return (
     <div
@@ -180,26 +223,20 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
             <div className={styles.navigation}>
               <IconButton
                 aria-label="previous"
-                ref={prevEl}
+                onClick={handlePrev}
+                type="button"
                 style={{
-                  color: theme.palette.icon,
-                  border: `2px solid ${theme.palette.icon}`,
-                  borderRadius: '10px',
+                  ...navButtonStyle,
                   marginRight: '24px',
-                  padding: '14px',
                 }}
               >
                 <ArrowBack />
               </IconButton>
               <IconButton
                 aria-label="next"
-                ref={nextEl}
-                style={{
-                  color: theme.palette.icon,
-                  border: `2px solid ${theme.palette.icon}`,
-                  borderRadius: '10px',
-                  padding: '14px',
-                }}
+                onClick={handleNext}
+                type="button"
+                style={navButtonStyle}
               >
                 <ArrowForward />
               </IconButton>
@@ -221,11 +258,15 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
         initialSlide={initialSlide}
         loop={loop}
         modules={modules}
-        navigation={navigationOptions}
+        onSwiper={(swiper: SwiperCore) => {
+          swiperRef.current = swiper;
+        }}
         pagination={paginationOptions}
         slidesPerView={slidesPerView || 'auto'}
         spaceBetween={spaceBetween || 0}
         speed={swiperSpeed}
+        touchStartPreventDefault={false}
+        watchOverflow={false}
       />
       {pagination && (
         <div

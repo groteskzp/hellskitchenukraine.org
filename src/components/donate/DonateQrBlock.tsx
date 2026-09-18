@@ -12,14 +12,24 @@ export const DonateQrBlock = () => {
   const { t } = useTranslation();
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box
+      sx={{
+        width: '100%',
+        maxWidth: 420,
+        mx: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       <Typography
         variant="h4"
         sx={{
-          mb: { xs: 3, md: 6 },
+          mb: { xs: 3, md: 4 },
           textAlign: 'center',
           fontWeight: 800,
           fontSize: { xs: '1.75rem', md: '2.125rem' },
+          width: '100%',
         }}
       >
         {t('donatePage.qr.title')}
