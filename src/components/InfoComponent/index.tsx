@@ -154,7 +154,6 @@ export const InfoComponent: React.FC<InfoComponentProps> = ({
           display: 'flex',
           flex: 1,
           flexDirection: 'column',
-          height: '100%',
         }}
       >
         <CardContent sx={{ flex: 1, px: 0 }}>
