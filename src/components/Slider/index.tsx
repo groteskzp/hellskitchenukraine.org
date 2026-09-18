@@ -107,13 +107,8 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
     }
   };
 
-  /**
-   * Click/tap pause for continuous ribbons.
-   * Must use stop()/start() — not pause()/resume().
-   * freeMode emits `_freeModeStaticRelease` on pointer up, which calls resume()
-   * whenever pause() set pausedByInteraction; that resumes immediately on the
-   * first release and then makes later clicks unable to stay paused.
-   */
+  // stop()/start() — pause() sets pausedByInteraction and freeMode's
+  // `_freeModeStaticRelease` on pointer-up immediately resume()s it.
   const pauseAndScheduleResume = () => {
     if (!continuous) return;
     const swiper = swiperRef.current;
@@ -121,14 +116,29 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
 
     clearResumeTimer();
 
-    // Freeze the in-flight CSS transition so the ribbon stops now.
-    const translate = swiper.getTranslate();
-    swiper.setTransition(0);
-    swiper.setTranslate(translate);
+    const freezeRibbon = () => {
+      const active = swiperRef.current;
+      if (!active || active.destroyed) return;
+      // delay:0 queues slideNext on rAF; stop() does not cancel that rAF.
+      const translate = active.getTranslate();
+      active.setTransition(0);
+      active.setTranslate(translate);
+      // loop + animating blocks the next slideNext after start().
+      active.animating = false;
+    };
+
+    freezeRibbon();
 
     if (swiper.autoplay.running) {
       swiper.autoplay.stop();
     }
+
+    // Catch a slideNext already scheduled on rAF before stop(); Swiper does
+    // not cancel that handle. Double-rAF covers slideNext's own rAF proceed.
+    window.requestAnimationFrame(() => {
+      freezeRibbon();
+      window.requestAnimationFrame(freezeRibbon);
+    });
 
     resumeTimerRef.current = window.setTimeout(() => {
       const active = swiperRef.current;
@@ -137,6 +147,7 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
         return;
       }
       if (!active.autoplay.running) {
+        active.animating = false;
         active.autoplay.start();
       }
       resumeTimerRef.current = null;
