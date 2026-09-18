@@ -1,0 +1,28 @@
+.gallery {
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+}
+
+/* SwiperSlider wrapper: first child is the nav header when navigation is on */
+.slider > div:first-child {
+	justify-content: flex-end;
+	margin-bottom: 16px;
+	padding: 0 16px;
+}
+
+.slider :global(.swiper) {
+	overflow: visible;
+	padding: 0 16px;
+	width: 100%;
+}
+
+.slide {
+	height: 100%;
+}
+
+.slideImage {
+	display: block;
+	height: 100%;
+	width: 100%;
+}
