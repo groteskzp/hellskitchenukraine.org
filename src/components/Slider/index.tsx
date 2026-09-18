@@ -10,6 +10,7 @@ import React, {
   isValidElement,
   MutableRefObject,
   ReactNode,
+  useEffect,
   useMemo,
   useRef,
 } from 'react';
@@ -52,6 +53,9 @@ export const CONTINUOUS_FREE_MODE: FreeModeOptions = {
 
 export const CONTINUOUS_SPEED = 6000;
 
+/** After click/pointer/touch pause, resume continuous autoplay. */
+const INTERACTION_RESUME_MS = 3000;
+
 /** Nudge distance for continuous freeMode arrows (keeps ribbon smooth, still responds). */
 const CONTINUOUS_NUDGE_MS = 450;
 
@@ -90,8 +94,31 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
   continuous,
 }: SwiperSliderProps) => {
   const swiperRef: MutableRefObject<SwiperCore | null> = useRef(null);
+  const resumeTimerRef = useRef<number | null>(null);
   const theme: Theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const clearResumeTimer = () => {
+    if (resumeTimerRef.current != null) {
+      window.clearTimeout(resumeTimerRef.current);
+      resumeTimerRef.current = null;
+    }
+  };
+
+  const pauseAndScheduleResume = () => {
+    if (!continuous) return;
+    const swiper = swiperRef.current;
+    if (!swiper?.autoplay) return;
+
+    swiper.autoplay.pause();
+    clearResumeTimer();
+    resumeTimerRef.current = window.setTimeout(() => {
+      swiperRef.current?.autoplay?.resume();
+      resumeTimerRef.current = null;
+    }, INTERACTION_RESUME_MS);
+  };
+
+  useEffect(() => () => clearResumeTimer(), []);
 
   const autoplayOptions: AutoplayOptions | undefined = useMemo(() => {
     if (continuous) {
@@ -258,9 +285,12 @@ export const SwiperSlider: FC<SwiperSliderProps> = ({
         initialSlide={initialSlide}
         loop={loop}
         modules={modules}
+        onClick={continuous ? pauseAndScheduleResume : undefined}
         onSwiper={(swiper: SwiperCore) => {
           swiperRef.current = swiper;
         }}
+        onTouchEnd={continuous ? pauseAndScheduleResume : undefined}
+        onTouchStart={continuous ? pauseAndScheduleResume : undefined}
         pagination={paginationOptions}
         slidesPerView={slidesPerView || 'auto'}
         spaceBetween={spaceBetween || 0}
