@@ -4,8 +4,9 @@ import { Box, Stack } from '@mui/material';
 import { DonateForm } from './DonateForm';
 import { DonateQrBlock } from './DonateQrBlock';
 
-/** Match WayForPay form width so Privat QR aligns consistently. */
-const DONATE_COLUMN_MAX_WIDTH = 420;
+/** Match WayForPay form width; QR row can widen for two cards. */
+const DONATE_FORM_MAX_WIDTH = 420;
+const DONATE_QR_MAX_WIDTH = { xs: 420, md: 880 };
 
 export const DonateSection = () => (
   <Box
@@ -25,7 +26,7 @@ export const DonateSection = () => (
       <Box
         sx={{
           width: '100%',
-          maxWidth: DONATE_COLUMN_MAX_WIDTH,
+          maxWidth: DONATE_FORM_MAX_WIDTH,
           display: 'flex',
           justifyContent: 'center',
         }}
@@ -36,7 +37,7 @@ export const DonateSection = () => (
       <Box
         sx={{
           width: '100%',
-          maxWidth: DONATE_COLUMN_MAX_WIDTH,
+          maxWidth: DONATE_QR_MAX_WIDTH,
           display: 'flex',
           justifyContent: 'center',
           mx: 'auto',
