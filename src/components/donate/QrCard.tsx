@@ -22,6 +22,7 @@ export const QrCard: React.FC<QrCardProps> = ({
         boxSizing: 'border-box',
         width: '100%',
         maxWidth: 420,
+        height: '100%',
         mx: 'auto',
         p: { xs: 2, sm: 3 },
         borderRadius: 6,
@@ -96,7 +97,18 @@ export const QrCard: React.FC<QrCardProps> = ({
   );
 
   if (!href) {
-    return card;
+    return (
+      <Box
+        sx={{
+          flex: '1 1 280px',
+          width: '100%',
+          maxWidth: 420,
+          mx: 'auto',
+        }}
+      >
+        {card}
+      </Box>
+    );
   }
 
   return (
@@ -107,6 +119,7 @@ export const QrCard: React.FC<QrCardProps> = ({
       underline="none"
       sx={{
         display: 'block',
+        flex: '1 1 280px',
         width: '100%',
         maxWidth: 420,
         mx: 'auto',
