@@ -44,7 +44,7 @@ export const QrCard: React.FC<QrCardProps> = ({
         variant="overline"
         sx={{
           display: 'block',
-          mb: 1.5,
+          mb: 3,
           fontWeight: 900,
           letterSpacing: 2,
           color: 'common.black',
