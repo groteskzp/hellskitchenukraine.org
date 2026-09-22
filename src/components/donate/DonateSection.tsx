@@ -1,12 +1,12 @@
 import React from 'react';
-import { Box, Stack } from '@mui/material';
+import { Box } from '@mui/material';
 
 import { DonateForm } from './DonateForm';
 import { DonateQrBlock } from './DonateQrBlock';
 
-/** Match WayForPay form width; QR row can widen for two cards on desktop. */
+/** WayForPay form width; QR column matches on desktop side layout. */
 const DONATE_FORM_MAX_WIDTH = 420;
-const DONATE_QR_MAX_WIDTH = { xs: '100%', md: 880 };
+const DONATE_QR_COL_MAX_WIDTH = 420;
 
 export const DonateSection = () => (
   <Box
@@ -21,10 +21,13 @@ export const DonateSection = () => (
       overflowX: 'hidden',
     }}
   >
-    <Stack
-      spacing={{ xs: 4, md: 6 }}
-      alignItems="center"
+    <Box
       sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
+        alignItems: { xs: 'center', md: 'flex-start' },
+        justifyContent: 'center',
+        gap: { xs: 4, md: 5 },
         width: '100%',
         maxWidth: '100%',
         minWidth: 0,
@@ -35,11 +38,11 @@ export const DonateSection = () => (
         sx={{
           width: '100%',
           maxWidth: { xs: '100%', sm: DONATE_FORM_MAX_WIDTH },
+          flex: { md: '1 1 0' },
           minWidth: 0,
           boxSizing: 'border-box',
           display: 'flex',
           justifyContent: 'center',
-          mx: 'auto',
         }}
       >
         <DonateForm />
@@ -48,17 +51,17 @@ export const DonateSection = () => (
       <Box
         sx={{
           width: '100%',
-          maxWidth: DONATE_QR_MAX_WIDTH,
+          maxWidth: { xs: '100%', md: DONATE_QR_COL_MAX_WIDTH },
+          flex: { md: '1 1 0' },
           minWidth: 0,
           boxSizing: 'border-box',
           display: 'flex',
           justifyContent: 'center',
-          mx: 'auto',
           overflowX: 'hidden',
         }}
       >
         <DonateQrBlock />
       </Box>
-    </Stack>
+    </Box>
   </Box>
 );

@@ -31,10 +31,10 @@ export const DonateQrBlock = () => {
       <Typography
         variant="h4"
         sx={{
-          mb: { xs: 3, md: 4 },
+          mb: { xs: 3, md: 3 },
           textAlign: 'center',
           fontWeight: 800,
-          fontSize: { xs: '1.75rem', md: '2.125rem' },
+          fontSize: { xs: '1.5rem', md: '1.75rem' },
           width: '100%',
           maxWidth: '100%',
           boxSizing: 'border-box',
@@ -44,15 +44,13 @@ export const DonateQrBlock = () => {
         {t('donatePage.qr.title')}
       </Typography>
 
+      {/* Always column: Privat above Mono (desktop side panel + mobile) */}
       <Box
         sx={{
           display: 'flex',
-          flexDirection: { xs: 'column', md: 'row' },
-          flexWrap: { xs: 'nowrap', md: 'nowrap' },
-          gap: { xs: 3, md: 4 },
-          justifyContent: 'center',
-          // flex-start on md: tops of Privat/Mono cards share one line
-          alignItems: { xs: 'stretch', md: 'flex-start' },
+          flexDirection: 'column',
+          gap: { xs: 3, md: 3 },
+          alignItems: 'stretch',
           width: '100%',
           maxWidth: '100%',
           minWidth: 0,
