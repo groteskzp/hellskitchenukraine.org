@@ -61,6 +61,9 @@ i18n.use(initReactI18next).init({
               text: 'Former co-founder of Opendoor. Early staff at Spotify and Clearbit.',
             },
           },
+          mediaSection: {
+            title: 'About us',
+          },
         },
 
         inProgressPage: {
@@ -393,6 +396,9 @@ Our mission is to enhance the safety of those who clear our land of mines and ot
               position: 'Координатор проєктів',
               text: 'Former co-founder of Opendoor. Early staff at Spotify and Clearbit.',
             },
+          },
+          mediaSection: {
+            title: 'Про нас',
           },
         },
 
