@@ -62,7 +62,7 @@ export const AboutMediaVideos: React.FC = () => {
         className={styles.slider}
         loop
         spaceBetween={24}
-        title={t('homePage.mediaSection.title')}
+        title={t('aboutPage.mediaSection.title')}
       >
         {mediaVideos.map((video) => (
           <SwiperSlide key={video.title} className={styles.slide}>
