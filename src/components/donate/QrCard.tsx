@@ -9,6 +9,9 @@ interface QrCardProps {
   href?: string;
 }
 
+/** Fixed caption band so Privat (2 lines) and Mono (1 line) share one QR baseline. */
+const TITLE_BAND_HEIGHT = { xs: 56, sm: 64 };
+
 export const QrCard: React.FC<QrCardProps> = ({
   title,
   img,
@@ -21,14 +24,16 @@ export const QrCard: React.FC<QrCardProps> = ({
       sx={{
         boxSizing: 'border-box',
         width: '100%',
-        maxWidth: 420,
+        maxWidth: '100%',
+        minWidth: 0,
         height: '100%',
-        mx: 'auto',
         p: { xs: 2, sm: 3 },
         borderRadius: 6,
         textAlign: 'center',
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'stretch',
+        overflow: 'hidden',
         backgroundColor: 'rgba(255, 255, 255, 0.65)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
@@ -45,12 +50,15 @@ export const QrCard: React.FC<QrCardProps> = ({
       <Typography
         variant="overline"
         sx={{
+          boxSizing: 'border-box',
           display: 'flex',
-          alignItems: 'flex-end',
+          alignItems: 'center',
           justifyContent: 'center',
-          // Same caption band so Privat/Mono QR frames share one baseline in a row
-          minHeight: { xs: 40, sm: 48 },
-          mb: 3,
+          height: TITLE_BAND_HEIGHT,
+          minHeight: TITLE_BAND_HEIGHT,
+          flexShrink: 0,
+          mb: 2,
+          px: 0.5,
           fontWeight: 900,
           letterSpacing: 2,
           color: 'common.black',
@@ -58,6 +66,7 @@ export const QrCard: React.FC<QrCardProps> = ({
           fontSize: { xs: '0.65rem', sm: '0.75rem' },
           lineHeight: 1.35,
           textAlign: 'center',
+          overflow: 'hidden',
         }}
       >
         {title}
@@ -65,14 +74,17 @@ export const QrCard: React.FC<QrCardProps> = ({
 
       <Box
         sx={{
+          boxSizing: 'border-box',
           backgroundColor: '#FFFFFE',
           p: { xs: 1.5, sm: 2 },
           borderRadius: 4,
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          aspectRatio: '1/1',
+          aspectRatio: '1 / 1',
           width: '100%',
+          maxWidth: '100%',
+          minWidth: 0,
           flexShrink: 0,
           boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.02)',
           position: 'relative',
@@ -95,8 +107,12 @@ export const QrCard: React.FC<QrCardProps> = ({
             src={img}
             alt={title}
             sx={{
+              display: 'block',
+              boxSizing: 'border-box',
               width: '100%',
               height: '100%',
+              maxWidth: '100%',
+              maxHeight: '100%',
               objectFit: 'contain',
               mixBlendMode: 'multiply',
             }}
@@ -109,12 +125,12 @@ export const QrCard: React.FC<QrCardProps> = ({
   const shellSx = {
     display: 'flex',
     flexDirection: 'column',
+    alignSelf: { xs: 'center', md: 'flex-start' },
     flex: { xs: '1 1 auto', md: '1 1 0' },
-    width: { xs: '100%', md: 'auto' },
-    minWidth: { md: 0 },
+    width: { xs: '100%', md: '100%' },
+    minWidth: { xs: 0, md: 0 },
     maxWidth: 420,
-    height: { md: '100%' },
-    mx: 'auto',
+    overflow: 'hidden',
     color: 'inherit',
     textDecoration: 'none',
   } as const;

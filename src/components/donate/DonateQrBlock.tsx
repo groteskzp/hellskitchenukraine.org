@@ -44,7 +44,8 @@ export const DonateQrBlock = () => {
           flexWrap: { xs: 'wrap', md: 'nowrap' },
           gap: { xs: 3, md: 4 },
           justifyContent: 'center',
-          alignItems: { xs: 'center', md: 'stretch' },
+          // flex-start: tops of Privat/Mono cards share one line
+          alignItems: { xs: 'center', md: 'flex-start' },
           width: '100%',
         }}
       >
