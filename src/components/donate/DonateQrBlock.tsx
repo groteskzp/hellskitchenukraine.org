@@ -25,7 +25,10 @@ export const DonateQrBlock = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        overflowX: 'hidden',
+        // Room for QrCard hover translateY(-8px); avoid clipping
+        overflow: 'visible',
+        pt: 1,
+        pb: 2,
       }}
     >
       <Typography
@@ -51,12 +54,15 @@ export const DonateQrBlock = () => {
           flexWrap: { xs: 'nowrap', md: 'nowrap' },
           gap: { xs: 3, md: 4 },
           justifyContent: 'center',
-          // flex-start on md: tops of Privat/Mono cards share one line
           alignItems: { xs: 'stretch', md: 'flex-start' },
           width: '100%',
           maxWidth: '100%',
           minWidth: 0,
           boxSizing: 'border-box',
+          overflow: 'visible',
+          // Extra vertical room so hover lift is not clipped
+          pt: 1.5,
+          pb: 2.5,
         }}
       >
         <QrCard

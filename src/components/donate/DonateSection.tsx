@@ -54,7 +54,8 @@ export const DonateSection = () => (
           display: 'flex',
           justifyContent: 'center',
           mx: 'auto',
-          overflowX: 'hidden',
+          overflow: 'visible',
+          py: 1,
         }}
       >
         <DonateQrBlock />

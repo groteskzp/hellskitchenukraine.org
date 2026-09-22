@@ -39,10 +39,10 @@ export const QrCard: React.FC<QrCardProps> = ({
         WebkitBackdropFilter: 'blur(20px)',
         border: '1px solid rgba(255, 255, 255, 0.4)',
         boxShadow: '0 20px 50px rgba(0, 0, 0, 0.04)',
-        transition: 'background-color 0.3s ease',
+        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
         cursor: href ? 'pointer' : 'default',
-        // No translateY hover — overflow clipped the lifted card
         '&:hover': {
+          transform: 'translateY(-8px)',
           backgroundColor: 'rgba(255, 255, 255, 0.85)',
         },
       }}
@@ -134,7 +134,8 @@ export const QrCard: React.FC<QrCardProps> = ({
     minWidth: 0,
     maxWidth: { xs: '100%', md: 420 },
     mx: { xs: 0, md: 0 },
-    overflow: 'hidden',
+    // visible so Paper hover translateY is not clipped by the shell
+    overflow: 'visible',
     color: 'inherit',
     textDecoration: 'none',
   } as const;
