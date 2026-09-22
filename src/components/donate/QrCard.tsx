@@ -67,6 +67,8 @@ export const QrCard: React.FC<QrCardProps> = ({
           lineHeight: 1.35,
           textAlign: 'center',
           overflow: 'hidden',
+          whiteSpace: 'normal',
+          wordBreak: 'break-word',
         }}
       >
         {title}
@@ -125,11 +127,13 @@ export const QrCard: React.FC<QrCardProps> = ({
   const shellSx = {
     display: 'flex',
     flexDirection: 'column',
-    alignSelf: { xs: 'center', md: 'flex-start' },
+    boxSizing: 'border-box',
+    alignSelf: { xs: 'stretch', md: 'flex-start' },
     flex: { xs: '1 1 auto', md: '1 1 0' },
-    width: { xs: '100%', md: '100%' },
-    minWidth: { xs: 0, md: 0 },
-    maxWidth: 420,
+    width: '100%',
+    minWidth: 0,
+    maxWidth: { xs: '100%', md: 420 },
+    mx: { xs: 0, md: 0 },
     overflow: 'hidden',
     color: 'inherit',
     textDecoration: 'none',

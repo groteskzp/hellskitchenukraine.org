@@ -16,20 +16,44 @@ const DonatePage: React.FC = () => {
         minHeight: '80vh',
         display: 'flex',
         alignItems: 'center',
+        width: '100%',
+        maxWidth: '100%',
+        boxSizing: 'border-box',
+        overflowX: 'hidden',
       }}
     >
-      <Container maxWidth="lg">
+      <Container
+        maxWidth="lg"
+        sx={{
+          width: '100%',
+          boxSizing: 'border-box',
+          overflowX: 'hidden',
+          px: { xs: 2, sm: 3 },
+        }}
+      >
         <Stack
           spacing={4}
           sx={{
             py: { xs: 6, md: 10 },
             alignItems: 'center',
             textAlign: 'center',
+            width: '100%',
+            maxWidth: '100%',
+            boxSizing: 'border-box',
+            minWidth: 0,
           }}
         >
-          <Box sx={{ maxWidth: '800px' }}>
+          <Box
+            sx={{
+              width: '100%',
+              maxWidth: { xs: '100%', md: 800 },
+              boxSizing: 'border-box',
+              minWidth: 0,
+              px: { xs: 0.5, md: 0 },
+            }}
+          >
             <Typography
-              variant="h3" // Трохи збільшив для акценту, як на дизайні
+              variant="h3"
               sx={{
                 fontWeight: 800,
                 mb: 2,
@@ -50,7 +74,14 @@ const DonatePage: React.FC = () => {
             </Typography>
           </Box>
 
-          <Box sx={{ width: '100%' }}>
+          <Box
+            sx={{
+              width: '100%',
+              maxWidth: '100%',
+              minWidth: 0,
+              boxSizing: 'border-box',
+            }}
+          >
             <DonateSection />
           </Box>
         </Stack>

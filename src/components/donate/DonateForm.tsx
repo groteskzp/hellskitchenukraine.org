@@ -68,12 +68,14 @@ export const DonateForm: React.FC = () => {
   return (
     <Box
       sx={{
+        boxSizing: 'border-box',
         p: { xs: 3, sm: 5 },
         borderRadius: 6,
         boxShadow: '0 20px 40px rgba(0, 0, 0, 0.06)',
         width: '100%',
-        maxWidth: 420,
-        margin: '0 auto',
+        maxWidth: { xs: '100%', sm: 420 },
+        minWidth: 0,
+        mx: 'auto',
         backgroundColor: 'rgba(255, 255, 255, 0.7)',
         backdropFilter: 'blur(15px)',
         WebkitBackdropFilter: 'blur(15px)',
@@ -86,7 +88,8 @@ export const DonateForm: React.FC = () => {
         '&:focus-within': {
           backgroundColor: 'rgba(255, 255, 255, 0.95)',
           boxShadow: '0 0 30px rgba(255, 255, 255, 0.5)',
-          transform: { xs: 'scale(1.02)', lg: 'none' },
+          // scale on xs caused horizontal overflow / right shift
+          transform: 'none',
         },
       }}
     >

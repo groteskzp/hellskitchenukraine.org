@@ -19,9 +19,13 @@ export const DonateQrBlock = () => {
     <Box
       sx={{
         width: '100%',
+        maxWidth: '100%',
+        minWidth: 0,
+        boxSizing: 'border-box',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        overflowX: 'hidden',
       }}
     >
       <Typography
@@ -32,6 +36,9 @@ export const DonateQrBlock = () => {
           fontWeight: 800,
           fontSize: { xs: '1.75rem', md: '2.125rem' },
           width: '100%',
+          maxWidth: '100%',
+          boxSizing: 'border-box',
+          px: { xs: 1, md: 0 },
         }}
       >
         {t('donatePage.qr.title')}
@@ -41,12 +48,15 @@ export const DonateQrBlock = () => {
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column', md: 'row' },
-          flexWrap: { xs: 'wrap', md: 'nowrap' },
+          flexWrap: { xs: 'nowrap', md: 'nowrap' },
           gap: { xs: 3, md: 4 },
           justifyContent: 'center',
-          // flex-start: tops of Privat/Mono cards share one line
-          alignItems: { xs: 'center', md: 'flex-start' },
+          // flex-start on md: tops of Privat/Mono cards share one line
+          alignItems: { xs: 'stretch', md: 'flex-start' },
           width: '100%',
+          maxWidth: '100%',
+          minWidth: 0,
+          boxSizing: 'border-box',
         }}
       >
         <QrCard
