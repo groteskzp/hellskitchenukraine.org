@@ -27,6 +27,8 @@ export const QrCard: React.FC<QrCardProps> = ({
         p: { xs: 2, sm: 3 },
         borderRadius: 6,
         textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
         backgroundColor: 'rgba(255, 255, 255, 0.65)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
@@ -43,13 +45,19 @@ export const QrCard: React.FC<QrCardProps> = ({
       <Typography
         variant="overline"
         sx={{
-          display: 'block',
+          display: 'flex',
+          alignItems: 'flex-end',
+          justifyContent: 'center',
+          // Same caption band so Privat/Mono QR frames share one baseline in a row
+          minHeight: { xs: 40, sm: 48 },
           mb: 3,
           fontWeight: 900,
           letterSpacing: 2,
           color: 'common.black',
           opacity: 0.5,
           fontSize: { xs: '0.65rem', sm: '0.75rem' },
+          lineHeight: 1.35,
+          textAlign: 'center',
         }}
       >
         {title}
@@ -64,6 +72,8 @@ export const QrCard: React.FC<QrCardProps> = ({
           justifyContent: 'center',
           alignItems: 'center',
           aspectRatio: '1/1',
+          width: '100%',
+          flexShrink: 0,
           boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.02)',
           position: 'relative',
           overflow: 'hidden',
@@ -97,13 +107,16 @@ export const QrCard: React.FC<QrCardProps> = ({
   );
 
   const shellSx = {
-    display: 'block',
+    display: 'flex',
+    flexDirection: 'column',
     flex: { xs: '1 1 auto', md: '1 1 0' },
     width: { xs: '100%', md: 'auto' },
     minWidth: { md: 0 },
     maxWidth: 420,
+    height: { md: '100%' },
     mx: 'auto',
     color: 'inherit',
+    textDecoration: 'none',
   } as const;
 
   if (!href) {
