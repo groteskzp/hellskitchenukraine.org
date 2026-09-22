@@ -27,7 +27,8 @@ export const DonateSection = () => (
         flexDirection: { xs: 'column', md: 'row' },
         alignItems: { xs: 'center', md: 'flex-start' },
         justifyContent: 'center',
-        gap: { xs: 4, md: 5 },
+        // Wider horizontal separation so form and QR column do not feel stuck together
+        gap: { xs: 4, md: 10 },
         width: '100%',
         maxWidth: '100%',
         minWidth: 0,
@@ -43,6 +44,8 @@ export const DonateSection = () => (
           boxSizing: 'border-box',
           display: 'flex',
           justifyContent: 'center',
+          // Drop form so its top lines up with QR cards (below the QR section title)
+          pt: { xs: 0, md: 8 },
         }}
       >
         <DonateForm />
