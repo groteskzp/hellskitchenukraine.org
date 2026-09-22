@@ -44,7 +44,7 @@ export const DonateQrBlock = () => {
           flexWrap: { xs: 'wrap', md: 'nowrap' },
           gap: { xs: 3, md: 4 },
           justifyContent: 'center',
-          alignItems: 'stretch',
+          alignItems: { xs: 'center', md: 'stretch' },
           width: '100%',
         }}
       >
