@@ -8,6 +8,10 @@ import { QrCard } from './QrCard';
 const PRIVAT_PAYMENT_URL =
   'https://bank.gov.ua/qr/QkNECjAwMgoyClVDVAoKwc4gwdQgz8XKxcvczcAgytPVzd8KVUEzNDMwNTI5OTAwMDAwMjYwMDkwNDU5MTI5NzUKVUFICjQ0NjYyMDMwCgoKCg==';
 
+/** NBU payment QR payload from `public/qr/mono.png` (same target as scanning). */
+const MONO_PAYMENT_URL =
+  'https://bank.gov.ua/qr/QkNECjAwMgoxClVDVAoK0JHQpCDQkdC-INCf0LXQutC10LvRjNC90LAg0JrRg9GF0L3RjwpVQTM0MzA1Mjk5MDAwMDAyNjAwOTA0NTkxMjk3NQpVQUgwCjQ0NjYyMDMwCgoK0JHQu9Cw0LPQvtC00ZbQudC90LAg0LTQvtC_0L7QvNC-0LPQsAoK';
+
 export const DonateQrBlock = () => {
   const { t } = useTranslation();
 
@@ -15,8 +19,6 @@ export const DonateQrBlock = () => {
     <Box
       sx={{
         width: '100%',
-        maxWidth: 420,
-        mx: 'auto',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -38,8 +40,11 @@ export const DonateQrBlock = () => {
       <Box
         sx={{
           display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          flexWrap: { xs: 'wrap', md: 'nowrap' },
+          gap: { xs: 3, md: 4 },
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'stretch',
           width: '100%',
         }}
       >
@@ -47,6 +52,11 @@ export const DonateQrBlock = () => {
           href={PRIVAT_PAYMENT_URL}
           img="/qr/privat.png"
           title={t('donatePage.qr.privat')}
+        />
+        <QrCard
+          href={MONO_PAYMENT_URL}
+          img="/qr/mono.png"
+          title={t('donatePage.qr.mono')}
         />
       </Box>
     </Box>

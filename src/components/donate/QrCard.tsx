@@ -22,6 +22,7 @@ export const QrCard: React.FC<QrCardProps> = ({
         boxSizing: 'border-box',
         width: '100%',
         maxWidth: 420,
+        height: '100%',
         mx: 'auto',
         p: { xs: 2, sm: 3 },
         borderRadius: 6,
@@ -43,7 +44,7 @@ export const QrCard: React.FC<QrCardProps> = ({
         variant="overline"
         sx={{
           display: 'block',
-          mb: 1.5,
+          mb: 3,
           fontWeight: 900,
           letterSpacing: 2,
           color: 'common.black',
@@ -95,8 +96,18 @@ export const QrCard: React.FC<QrCardProps> = ({
     </Paper>
   );
 
+  const shellSx = {
+    display: 'block',
+    flex: { xs: '1 1 auto', md: '1 1 0' },
+    width: { xs: '100%', md: 'auto' },
+    minWidth: { md: 0 },
+    maxWidth: 420,
+    mx: 'auto',
+    color: 'inherit',
+  } as const;
+
   if (!href) {
-    return card;
+    return <Box sx={shellSx}>{card}</Box>;
   }
 
   return (
@@ -105,13 +116,7 @@ export const QrCard: React.FC<QrCardProps> = ({
       rel="noopener noreferrer"
       target="_blank"
       underline="none"
-      sx={{
-        display: 'block',
-        width: '100%',
-        maxWidth: 420,
-        mx: 'auto',
-        color: 'inherit',
-      }}
+      sx={shellSx}
     >
       {card}
     </Link>
