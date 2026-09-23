@@ -25,7 +25,9 @@ export const DonateQrBlock = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        overflowX: 'hidden',
+        // Room under the column for the card shadow; lift uses the title gap.
+        overflow: 'visible',
+        pb: 2,
       }}
     >
       <Typography
@@ -44,7 +46,8 @@ export const DonateQrBlock = () => {
         {t('donatePage.qr.title')}
       </Typography>
 
-      {/* Always column: Privat above Mono (desktop side panel + mobile) */}
+      {/* Always column: Privat above Mono (desktop side panel + mobile).
+          Shared title band in QrCard keeps both cards the same height. */}
       <Box
         sx={{
           display: 'flex',
@@ -55,6 +58,11 @@ export const DonateQrBlock = () => {
           maxWidth: '100%',
           minWidth: 0,
           boxSizing: 'border-box',
+          overflow: 'visible',
+          // 8px lift fits in the title margin / card gap; keep a little extra
+          // so a clipping ancestor cannot crop the raised edge.
+          pt: 1,
+          pb: 1,
         }}
       >
         <QrCard

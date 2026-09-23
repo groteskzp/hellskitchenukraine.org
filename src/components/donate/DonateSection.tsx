@@ -18,7 +18,10 @@ export const DonateSection = () => (
       width: '100%',
       minWidth: 0,
       boxSizing: 'border-box',
-      overflowX: 'hidden',
+      // clip (not hidden) keeps the mobile horizontal lock without turning
+      // overflow-y into auto, which would crop the QR hover lift.
+      overflowX: 'clip',
+      overflowY: 'visible',
     }}
   >
     <Box
@@ -44,8 +47,9 @@ export const DonateSection = () => (
           boxSizing: 'border-box',
           display: 'flex',
           justifyContent: 'center',
-          // Drop form so its top lines up with QR cards (below the QR section title)
-          pt: { xs: 0, md: 8 },
+          // Drop form so its top lines up with QR cards (below the QR section title),
+          // including the cards-column padding that keeps the hover lift inside.
+          pt: { xs: 0, md: 8.5 },
         }}
       >
         <DonateForm />
@@ -60,7 +64,9 @@ export const DonateSection = () => (
           boxSizing: 'border-box',
           display: 'flex',
           justifyContent: 'center',
-          overflowX: 'hidden',
+          // Do not clip QrCard hover translateY(-8px).
+          overflow: 'visible',
+          pb: 1,
         }}
       >
         <DonateQrBlock />

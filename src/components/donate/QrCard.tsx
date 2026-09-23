@@ -129,10 +129,13 @@ export const QrCard: React.FC<QrCardProps> = ({
     flexDirection: 'column',
     boxSizing: 'border-box',
     alignSelf: 'stretch',
+    flex: '1 1 auto',
     width: '100%',
+    height: '100%',
     minWidth: 0,
     maxWidth: '100%',
-    overflow: 'hidden',
+    // visible so Paper hover translateY is not clipped by the shell
+    overflow: 'visible',
     color: 'inherit',
     textDecoration: 'none',
   } as const;
