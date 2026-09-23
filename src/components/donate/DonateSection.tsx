@@ -1,12 +1,12 @@
 import React from 'react';
-import { Box, Stack } from '@mui/material';
+import { Box } from '@mui/material';
 
 import { DonateForm } from './DonateForm';
 import { DonateQrBlock } from './DonateQrBlock';
 
-/** Match WayForPay form width; QR row can widen for two cards on desktop. */
+/** WayForPay form width; QR column matches on desktop side layout. */
 const DONATE_FORM_MAX_WIDTH = 420;
-const DONATE_QR_MAX_WIDTH = { xs: '100%', md: 880 };
+const DONATE_QR_COL_MAX_WIDTH = 420;
 
 export const DonateSection = () => (
   <Box
@@ -18,13 +18,20 @@ export const DonateSection = () => (
       width: '100%',
       minWidth: 0,
       boxSizing: 'border-box',
-      overflowX: 'hidden',
+      // clip (not hidden) keeps the mobile horizontal lock without turning
+      // overflow-y into auto, which would crop the QR hover lift.
+      overflowX: 'clip',
+      overflowY: 'visible',
     }}
   >
-    <Stack
-      spacing={{ xs: 4, md: 6 }}
-      alignItems="center"
+    <Box
       sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
+        alignItems: { xs: 'center', md: 'flex-start' },
+        justifyContent: 'center',
+        // Wider horizontal separation so form and QR column do not feel stuck together
+        gap: { xs: 4, md: 10 },
         width: '100%',
         maxWidth: '100%',
         minWidth: 0,
@@ -35,11 +42,14 @@ export const DonateSection = () => (
         sx={{
           width: '100%',
           maxWidth: { xs: '100%', sm: DONATE_FORM_MAX_WIDTH },
+          flex: { md: '1 1 0' },
           minWidth: 0,
           boxSizing: 'border-box',
           display: 'flex',
           justifyContent: 'center',
-          mx: 'auto',
+          // Drop form so its top lines up with QR cards (below the QR section title),
+          // including the cards-column padding that keeps the hover lift inside.
+          pt: { xs: 0, md: 8.5 },
         }}
       >
         <DonateForm />
@@ -48,17 +58,19 @@ export const DonateSection = () => (
       <Box
         sx={{
           width: '100%',
-          maxWidth: DONATE_QR_MAX_WIDTH,
+          maxWidth: { xs: '100%', md: DONATE_QR_COL_MAX_WIDTH },
+          flex: { md: '1 1 0' },
           minWidth: 0,
           boxSizing: 'border-box',
           display: 'flex',
           justifyContent: 'center',
-          mx: 'auto',
-          overflowX: 'hidden',
+          // Do not clip QrCard hover translateY(-8px).
+          overflow: 'visible',
+          pb: 1,
         }}
       >
         <DonateQrBlock />
       </Box>
-    </Stack>
+    </Box>
   </Box>
 );
