@@ -25,16 +25,18 @@ export const DonateQrBlock = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        overflowX: 'hidden',
+        // Room under the column for the card shadow; lift uses the title gap.
+        overflow: 'visible',
+        pb: 2,
       }}
     >
       <Typography
         variant="h4"
         sx={{
-          mb: { xs: 3, md: 4 },
+          mb: { xs: 3, md: 3 },
           textAlign: 'center',
           fontWeight: 800,
-          fontSize: { xs: '1.75rem', md: '2.125rem' },
+          fontSize: { xs: '1.5rem', md: '1.75rem' },
           width: '100%',
           maxWidth: '100%',
           boxSizing: 'border-box',
@@ -44,19 +46,23 @@ export const DonateQrBlock = () => {
         {t('donatePage.qr.title')}
       </Typography>
 
+      {/* Always column: Privat above Mono (desktop side panel + mobile).
+          Shared title band in QrCard keeps both cards the same height. */}
       <Box
         sx={{
           display: 'flex',
-          flexDirection: { xs: 'column', md: 'row' },
-          flexWrap: { xs: 'nowrap', md: 'nowrap' },
-          gap: { xs: 3, md: 4 },
-          justifyContent: 'center',
-          // flex-start on md: tops of Privat/Mono cards share one line
-          alignItems: { xs: 'stretch', md: 'flex-start' },
+          flexDirection: 'column',
+          gap: { xs: 3, md: 3 },
+          alignItems: 'stretch',
           width: '100%',
           maxWidth: '100%',
           minWidth: 0,
           boxSizing: 'border-box',
+          overflow: 'visible',
+          // 8px lift fits in the title margin / card gap; keep a little extra
+          // so a clipping ancestor cannot crop the raised edge.
+          pt: 1,
+          pb: 1,
         }}
       >
         <QrCard
