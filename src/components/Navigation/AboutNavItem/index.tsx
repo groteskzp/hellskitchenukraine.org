@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Box, Collapse, IconButton } from '@mui/material';
+import { Box, Collapse, IconButton, MenuItem } from '@mui/material';
 import classnames from 'classnames';
 
 import { MENU_ROUTES } from '../../../Router/constants';
@@ -156,34 +156,55 @@ export const AboutNavItem: React.FC<AboutNavItemProps> = ({
   if (layout === 'mobile') {
     return (
       <Box sx={{ mb: 2 }}>
-        <Box sx={{ alignItems: 'center', display: 'flex' }}>
-          <Box sx={{ flex: 1 }}>
-            <NavLink
-              onClick={onNavigate}
-              paragraphStyles={paragraphStyles}
-              path={MENU_ROUTES.About}
-            />
-          </Box>
+        <MenuItem
+          component="div"
+          disableRipple
+          sx={{
+            alignItems: 'center',
+            boxSizing: 'border-box',
+            display: 'flex',
+            minHeight: { xs: 48, sm: 'auto' },
+            px: 2,
+            py: '6px',
+            width: '100%',
+            '& a': { marginRight: 0 },
+          }}
+        >
+          <NavLink
+            onClick={onNavigate}
+            paragraphStyles={paragraphStyles}
+            path={MENU_ROUTES.About}
+          />
           <IconButton
             aria-controls={submenuId}
             aria-expanded={visible}
             aria-label={t('navigation.aboutSubmenu')}
             onClick={() => setVisible((open) => !open)}
-            sx={{ color: 'inherit' }}
+            onMouseDown={(event) => event.stopPropagation()}
+            size="small"
+            sx={{
+              color: 'inherit',
+              flexShrink: 0,
+              height: 24,
+              ml: '2px',
+              p: 0,
+              width: 24,
+            }}
           >
             <ExpandMoreIcon
               sx={{
+                fontSize: 24,
                 transform: visible ? 'rotate(180deg)' : 'none',
                 transition: 'transform 0.2s ease',
               }}
             />
           </IconButton>
-        </Box>
+        </MenuItem>
         <Collapse in={visible}>
           <Box
             component="ul"
             id={submenuId}
-            sx={{ listStyle: 'none', m: 0, pl: 2, py: 1 }}
+            sx={{ listStyle: 'none', m: 0, pl: 4, py: 1 }}
           >
             {ABOUT_SUBMENU.map((path) => (
               <Box component="li" key={path} sx={{ mb: 1.5 }}>
