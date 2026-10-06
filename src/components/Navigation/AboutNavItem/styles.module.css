@@ -6,6 +6,11 @@
 .row {
   align-items: center;
   display: flex;
+
+  /* Slot for the chevron. The button is taken out of flow so its 24px box
+     cannot grow this row above the label line. */
+  padding-right: 26px;
+  position: relative;
 }
 
 .row a {
@@ -17,11 +22,18 @@
   background: transparent;
   border: 0;
   border-radius: 8px;
+  box-sizing: border-box;
   color: #14171b;
   cursor: pointer;
   display: flex;
-  margin-left: 2px;
+  height: 24px;
+  justify-content: center;
   padding: 2px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
 }
 
 .chevron:hover,
