@@ -5,6 +5,9 @@ export enum MENU_ROUTES {
   // News = 'news',
   // NewsAndEvents = 'newsAndEvents',
   About = 'about',
+  Documents = 'documents',
+  Standards = 'standards',
+  Other = 'other',
   // Cooperation = 'cooperation',
   // Contact = 'contact',
   ProjectsDetails = 'projectsDetails',
@@ -19,6 +22,9 @@ export enum MENU_ROUTES {
 
 export const ROUTES_PATH: { [key in MENU_ROUTES]: string } = {
   [MENU_ROUTES.About]: '/about',
+  [MENU_ROUTES.Documents]: '/documents',
+  [MENU_ROUTES.Standards]: '/standards',
+  [MENU_ROUTES.Other]: '/other',
   [MENU_ROUTES.Home]: '/',
   // [MENU_ROUTES.Contact]: '/contact',
   // [MENU_ROUTES.Cooperation]: '/cooperation',

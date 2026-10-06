@@ -21,6 +21,30 @@ i18n.use(initReactI18next).init({
           userAgreement: 'User agreement',
           reports: 'Reports',
           donate: 'Donate',
+          documents: 'Documents',
+          standards: 'Internal standards',
+          other: 'Other',
+          aboutSubmenu: 'Open About us sections',
+        },
+        drivePages: {
+          openInDrive: 'Open in Google Drive',
+          iframeTitle: 'Files on Google Drive',
+          documents: {
+            title: 'Documents',
+            description:
+              'Official documents of the charitable foundation: charter, register extract, and non-profit status decision.',
+          },
+          standards: {
+            title: 'Internal standards',
+            description:
+              'Internal policies and operating standards of the foundation.',
+          },
+          other: {
+            title: 'Other',
+            description: 'Additional materials of the foundation.',
+            emptyNote:
+              'If this folder has no files yet, they will appear in the list below automatically, without a site update.',
+          },
         },
         footer: {
           publicOffer: 'Public Offer',
@@ -141,10 +165,12 @@ i18n.use(initReactI18next).init({
               sytenkoInstitute: 'M.I.Sytenko institute',
               psychiatricClinic3: 'Psychiatric Clinic #3',
               holyTrinity: 'Holy Trinity',
-              medcenter:'Center for Emergency Medical Care and Disaster Medicine in Kharkiv Region',
-              multihospital:'City Clinical Multidisciplinary Hospital No. 25',
-              kharkivregionalhospital:'Kharkiv Regional Clinical Hospital',
-              psyinstitutngu:'P. V. Voloshyn Institute of Neurology, Psychiatry and Narcology of the National Academy of Medical Sciences of Ukraine'
+              medcenter:
+                'Center for Emergency Medical Care and Disaster Medicine in Kharkiv Region',
+              multihospital: 'City Clinical Multidisciplinary Hospital No. 25',
+              kharkivregionalhospital: 'Kharkiv Regional Clinical Hospital',
+              psyinstitutngu:
+                'P. V. Voloshyn Institute of Neurology, Psychiatry and Narcology of the National Academy of Medical Sciences of Ukraine',
             },
             slidersTitle: 'We help',
           },
@@ -266,7 +292,7 @@ Our mission is to enhance the safety of those who clear our land of mines and ot
             descriptionText:
               'Here you can review the financial reports and activity reports of the fund for the respective years.',
           },
-          },
+        },
         reportsPage: {
           page: {
             title: 'Fund Reports',
@@ -360,6 +386,29 @@ Our mission is to enhance the safety of those who clear our land of mines and ot
           userAgreement: 'Угода користувача',
           reports: 'Звітність',
           donate: 'Задонатити',
+          documents: 'Документи',
+          standards: 'Внутрішні стандарти діяльності',
+          other: 'Інше',
+          aboutSubmenu: 'Відкрити розділи «Про нас»',
+        },
+        drivePages: {
+          openInDrive: 'Відкрити на Google Диску',
+          iframeTitle: 'Файли на Google Диску',
+          documents: {
+            title: 'Документи',
+            description:
+              'Офіційні документи фонду: статут, виписка з ЄДРПОУ та рішення про неприбутковість.',
+          },
+          standards: {
+            title: 'Внутрішні стандарти діяльності',
+            description: 'Внутрішні політики та стандарти діяльності фонду.',
+          },
+          other: {
+            title: 'Інше',
+            description: 'Додаткові матеріали фонду.',
+            emptyNote:
+              'Якщо в папці ще немає файлів, вони з’являться в списку нижче автоматично — без оновлення сайту.',
+          },
         },
         aboutPage: {
           teamSection: {
@@ -476,10 +525,12 @@ Our mission is to enhance the safety of those who clear our land of mines and ot
               sytenkoInstitute: 'Інститут ім. М.I.Ситенко',
               psychiatricClinic3: '3-я психiатрична лiкарня',
               holyTrinity: 'Свята Трiйця',
-              medcenter:'Центр екстреної медичної допомоги та медицини катастроф у Харківській області',
-              multihospital:'Міська клінічна багатопрофільна лікарня № 25',
-              kharkivregionalhospital:'Харківська обласна клінічна лікарня',
-              psyinstitutngu:'Інститут неврології, психіатрії та наркології ім. П. В. Волошина Національної академії медичних наук України'
+              medcenter:
+                'Центр екстреної медичної допомоги та медицини катастроф у Харківській області',
+              multihospital: 'Міська клінічна багатопрофільна лікарня № 25',
+              kharkivregionalhospital: 'Харківська обласна клінічна лікарня',
+              psyinstitutngu:
+                'Інститут неврології, психіатрії та наркології ім. П. В. Волошина Національної академії медичних наук України',
             },
             slidersTitle: 'Ми допомагаємо',
           },

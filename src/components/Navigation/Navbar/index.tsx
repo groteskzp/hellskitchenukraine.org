@@ -16,11 +16,13 @@ import {
 } from '@mui/material';
 
 import { LINKS } from '../../../assets/constants';
+import { MENU_ROUTES } from '../../../Router/constants';
 import { ButtonComponent, ButtonSize } from '../../ButtonComponent';
 import { IconComponent } from '../../IconComponent';
 import { LanguageToggle } from '../../LanguageToggle';
 import { Logo } from '../../Logo';
 import { SocialNavbar } from '../../SocialNavbar';
+import { AboutNavItem } from '../AboutNavItem';
 import { NAVIGATION_MENU } from '../constants';
 import { NavLink } from '../NavLink';
 import { Transition } from './Transition';
@@ -61,17 +63,32 @@ export const Navbar: React.FC<NavbarProps> = () => {
     setOpen(false);
   };
 
+  const renderNavEntry = (path: MENU_ROUTES) => {
+    if (path === MENU_ROUTES.About) {
+      return (
+        <AboutNavItem
+          key={path}
+          layout="mobile"
+          onNavigate={handleClose}
+          paragraphStyles={paragraphStyles}
+        />
+      );
+    }
+
+    return (
+      <MenuItem key={path} onClick={handleClose} sx={{ mb: 2 }}>
+        <NavLink paragraphStyles={paragraphStyles} path={path} />
+      </MenuItem>
+    );
+  };
+
   const renderMobileMenu = () => {
     if (isTablet) return null;
 
     return (
       <>
         <Grid item xs={9}>
-          {NAVIGATION_MENU.map((path) => (
-            <MenuItem key={path} onClick={handleClose} sx={{ mb: 2 }}>
-              <NavLink paragraphStyles={paragraphStyles} path={path} />
-            </MenuItem>
-          ))}
+          {NAVIGATION_MENU.map((path) => renderNavEntry(path))}
           <Box sx={{ mt: 5 }} />
           <Box sx={{ ml: 2 }}>
             <ButtonComponent
@@ -113,25 +130,13 @@ export const Navbar: React.FC<NavbarProps> = () => {
         <Grid item xs={8}>
           <Grid container justifyContent="flex-end">
             <Grid item xs={6}>
-              {NAVIGATION_MENU.slice(0, 3).map((path) => (
-                <MenuItem key={path} onClick={handleClose} sx={{ mb: 2 }}>
-                  <NavLink paragraphStyles={paragraphStyles} path={path} />
-                </MenuItem>
-              ))}
+              {NAVIGATION_MENU.slice(0, 3).map((path) => renderNavEntry(path))}
             </Grid>
             <Grid item xs={6}>
-              {NAVIGATION_MENU.slice(3, 6).map((path) => (
-                <MenuItem key={path} onClick={handleClose} sx={{ mb: 2 }}>
-                  <NavLink paragraphStyles={paragraphStyles} path={path} />
-                </MenuItem>
-              ))}
+              {NAVIGATION_MENU.slice(3, 6).map((path) => renderNavEntry(path))}
             </Grid>
             <Grid item xs={0}>
-              {NAVIGATION_MENU.slice(6).map((path) => (
-                <MenuItem key={path} onClick={handleClose} sx={{ mb: 2 }}>
-                  <NavLink paragraphStyles={paragraphStyles} path={path} />
-                </MenuItem>
-              ))}
+              {NAVIGATION_MENU.slice(6).map((path) => renderNavEntry(path))}
             </Grid>
           </Grid>
           <Box sx={{ mt: 2 }} />
@@ -166,7 +171,10 @@ export const Navbar: React.FC<NavbarProps> = () => {
         style={{ maxHeight: isTablet ? '440px' : 'none' }}
         TransitionComponent={Transition}
         PaperProps={{
-          style: { background: theme.palette.blueGradient },
+          style: {
+            background: theme.palette.blueGradient,
+            overflowY: 'auto',
+          },
         }}
       >
         <AppBar position="relative" style={{ background: theme.palette.white }}>

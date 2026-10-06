@@ -7,6 +7,7 @@ import { MENU_ROUTES, ROUTES_PATH } from '../../../Router/constants';
 import { InternalLink } from '../../InternalLink';
 
 interface NavLinkProps {
+  onClick?: () => void;
   paragraphStyles?: React.CSSProperties;
   path: MENU_ROUTES;
   withActive?: boolean;
@@ -14,6 +15,7 @@ interface NavLinkProps {
 }
 
 export const NavLink: React.FC<NavLinkProps> = ({
+  onClick,
   paragraphStyles,
   isWhite,
   path,
@@ -42,6 +44,7 @@ export const NavLink: React.FC<NavLinkProps> = ({
   return (
     <InternalLink
       key={path}
+      onClick={onClick}
       style={{
         color: getColor(),
       }}

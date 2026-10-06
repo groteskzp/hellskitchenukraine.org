@@ -1,0 +1,78 @@
+.listItem {
+  margin-right: 8px;
+  position: relative;
+}
+
+.row {
+  align-items: center;
+  display: flex;
+}
+
+.row a {
+  margin-right: 0;
+}
+
+.chevron {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: #14171b;
+  cursor: pointer;
+  display: flex;
+  margin-left: 2px;
+  padding: 2px;
+}
+
+.chevron:hover,
+.chevron:focus-visible {
+  background: rgba(20, 23, 27, 8%);
+  outline: 2px solid #14171b;
+  outline-offset: 2px;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.submenu {
+  left: 0;
+  list-style: none;
+  margin: 0;
+  min-width: 320px;
+  padding: 8px 0 0;
+  position: absolute;
+  top: 100%;
+  z-index: 20;
+}
+
+.submenuHidden {
+  display: none;
+}
+
+.submenuList {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(20, 23, 27, 16%);
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+}
+
+.submenu a {
+  margin-right: 0;
+  padding: 8px 16px;
+  width: 100%;
+}
+
+.submenu a:hover,
+.submenu a:focus-visible {
+  background: #e5f1ff;
+  outline: none;
+}
+
+@media (width >= 1680px) {
+  .listItem {
+    margin-right: 20px;
+  }
+}
