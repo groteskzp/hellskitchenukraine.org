@@ -31,6 +31,24 @@ import styles from './styles.module.css';
 
 interface NavbarProps {}
 
+// Each route is one xs=6 peer: Головна|Звітність, Проєкти|Задонатити, Про нас|(empty).
+const tabletNavCells = (): Array<{ key: string; path: MENU_ROUTES | null }> => {
+  const left = NAVIGATION_MENU.slice(0, 3);
+  const right = NAVIGATION_MENU.slice(3);
+  const rowCount = Math.max(left.length, right.length);
+
+  return Array.from({ length: rowCount }, (_, row) => [
+    {
+      key: left[row] ?? `tablet-nav-empty-left-${row}`,
+      path: left[row] ?? null,
+    },
+    {
+      key: right[row] ?? `tablet-nav-empty-right-${row}`,
+      path: right[row] ?? null,
+    },
+  ]).flat();
+};
+
 export const Navbar: React.FC<NavbarProps> = () => {
   const [open, setOpen] = React.useState(false);
   const [aboutOpen, setAboutOpen] = React.useState(false);
@@ -132,16 +150,16 @@ export const Navbar: React.FC<NavbarProps> = () => {
           />
         </Grid>
         <Grid item xs={8}>
-          <Grid container justifyContent="flex-end">
-            <Grid item xs={6}>
-              {NAVIGATION_MENU.slice(0, 3).map((path) => renderNavEntry(path))}
-            </Grid>
-            <Grid item xs={6}>
-              {NAVIGATION_MENU.slice(3, 6).map((path) => renderNavEntry(path))}
-            </Grid>
-            <Grid item xs={0}>
-              {NAVIGATION_MENU.slice(6).map((path) => renderNavEntry(path))}
-            </Grid>
+          <Grid container>
+            {tabletNavCells().map((cell) =>
+              cell.path ? (
+                <Grid item key={cell.key} xs={6} zeroMinWidth>
+                  {renderNavEntry(cell.path)}
+                </Grid>
+              ) : (
+                <Grid item key={cell.key} xs={6} />
+              ),
+            )}
           </Grid>
           <Box sx={{ mt: 2 }} />
           <Grid container justifyContent="center">
