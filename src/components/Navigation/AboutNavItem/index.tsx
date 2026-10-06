@@ -155,7 +155,7 @@ export const AboutNavItem: React.FC<AboutNavItemProps> = ({
 
   if (layout === 'mobile') {
     return (
-      <Box sx={{ mb: 2 }}>
+      <Box sx={{ maxWidth: '100%', mb: 2, minWidth: 0, width: '100%' }}>
         <MenuItem
           component="div"
           disableRipple
@@ -163,10 +163,13 @@ export const AboutNavItem: React.FC<AboutNavItemProps> = ({
             alignItems: 'center',
             boxSizing: 'border-box',
             display: 'flex',
+            justifyContent: 'flex-start',
+            maxWidth: '100%',
             minHeight: { xs: 48, sm: 'auto' },
+            minWidth: 0,
             px: 2,
             py: '6px',
-            width: '100%',
+            width: 'auto',
             '& a': { marginRight: 0 },
           }}
         >
