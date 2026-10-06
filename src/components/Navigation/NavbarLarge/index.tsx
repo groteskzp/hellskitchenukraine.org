@@ -1,6 +1,8 @@
 import React from 'react';
 import { useMediaQuery, useTheme } from '@mui/material';
 
+import { MENU_ROUTES } from '../../../Router/constants';
+import { AboutNavItem } from '../AboutNavItem';
 import { NAVIGATION_MENU } from '../constants';
 import { NavLink } from '../NavLink';
 
@@ -19,11 +21,19 @@ export const NavbarLarge: React.FC<NavbarLargeProps> = () => {
   return (
     <nav className={styles.component}>
       <ul className={styles.list}>
-        {NAVIGATION_MENU.map((path) => (
-          <li key={path} className={styles.listItem}>
-            <NavLink path={path} paragraphStyles={linkStyles} />
-          </li>
-        ))}
+        {NAVIGATION_MENU.map((path) =>
+          path === MENU_ROUTES.About ? (
+            <AboutNavItem
+              key={path}
+              layout="desktop"
+              paragraphStyles={linkStyles}
+            />
+          ) : (
+            <li key={path} className={styles.listItem}>
+              <NavLink path={path} paragraphStyles={linkStyles} />
+            </li>
+          ),
+        )}
       </ul>
     </nav>
   );

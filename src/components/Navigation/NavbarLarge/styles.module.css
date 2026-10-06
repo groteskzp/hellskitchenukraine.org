@@ -17,11 +17,19 @@
   margin-right: 8px;
 }
 
+.list > .listItem a {
+  margin-right: 10px;
+}
+
 .listItem:last-child {
   margin-right: 0;
 }
 
-@media (min-width: 1680px) {
+@media (width >= 1680px) {
+  .list > .listItem a {
+    margin-right: 20px;
+  }
+
   .listItem {
     margin-right: 20px;
   }
