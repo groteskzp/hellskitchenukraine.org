@@ -13,6 +13,7 @@ import styles from './styles.module.css';
 interface AboutNavItemProps {
   layout: 'desktop' | 'mobile';
   onNavigate?: () => void;
+  onOpenChange?: (open: boolean) => void;
   paragraphStyles?: React.CSSProperties;
 }
 
@@ -25,6 +26,7 @@ const submenuLinkStyles: React.CSSProperties = {
 export const AboutNavItem: React.FC<AboutNavItemProps> = ({
   layout,
   onNavigate,
+  onOpenChange,
   paragraphStyles,
 }) => {
   const { t } = useTranslation();
@@ -35,6 +37,10 @@ export const AboutNavItem: React.FC<AboutNavItemProps> = ({
   const pinnedRef = useRef(false);
   const suppressFocusOpen = useRef(false);
   const submenuId = 'about-submenu';
+
+  useEffect(() => {
+    if (layout === 'mobile') onOpenChange?.(visible);
+  }, [layout, onOpenChange, visible]);
 
   const closeMenu = () => {
     pinnedRef.current = false;

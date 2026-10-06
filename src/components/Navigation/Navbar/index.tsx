@@ -33,11 +33,14 @@ interface NavbarProps {}
 
 export const Navbar: React.FC<NavbarProps> = () => {
   const [open, setOpen] = React.useState(false);
+  const [aboutOpen, setAboutOpen] = React.useState(false);
   const theme = useTheme();
   const { t } = useTranslation();
 
   const isTablet = useMediaQuery(theme.breakpoints.up('sm'));
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
+  let menuMaxHeight = 'none';
+  if (isTablet) menuMaxHeight = aboutOpen ? '92vh' : '440px';
 
   const iconStyles = {
     color: theme.palette.icon,
@@ -70,6 +73,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
           key={path}
           layout="mobile"
           onNavigate={handleClose}
+          onOpenChange={setAboutOpen}
           paragraphStyles={paragraphStyles}
         />
       );
@@ -168,7 +172,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
         fullScreen
         open={open}
         onClose={handleClose}
-        style={{ maxHeight: isTablet ? '440px' : 'none' }}
+        style={{ maxHeight: menuMaxHeight }}
         TransitionComponent={Transition}
         PaperProps={{
           style: {
