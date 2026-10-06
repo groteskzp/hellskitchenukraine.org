@@ -6,6 +6,7 @@ import AboutPage from '../pages/AboutPage';
 import ContactPage from '../pages/ContactPage';
 import DonatePage from '../pages/DonatePage';
 import DonateTestPage from '../pages/DonateTestPage';
+import DriveFolderPage from '../pages/DriveFolderPage';
 import HomePage from '../pages/HomePage';
 import InProgressPage from '../pages/InProgressPage';
 import JoinUsPage from '../pages/JoinUsPage';
@@ -24,6 +25,18 @@ const AppRoutes: React.FC = (): JSX.Element => (
       <Route path={ROUTES_PATH.projects} element={<Projects isBlue />} />
       <Route path={ROUTES_PATH.joinus} element={<JoinUsPage />} />
       <Route path={ROUTES_PATH.about} element={<AboutPage isBlue />} />
+      <Route
+        path={ROUTES_PATH.documents}
+        element={<DriveFolderPage folder="documents" isBlue />}
+      />
+      <Route
+        path={ROUTES_PATH.standards}
+        element={<DriveFolderPage folder="standards" isBlue />}
+      />
+      <Route
+        path={ROUTES_PATH.other}
+        element={<DriveFolderPage folder="other" isBlue />}
+      />
       <Route path={ROUTES_PATH.support} element={<SupportPage isBlue />} />
 
       {/* <Route path={ROUTES_PATH.news} element={<InProgressPage isBlue />} /> */}

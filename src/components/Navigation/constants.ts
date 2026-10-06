@@ -1,5 +1,11 @@
 import { MENU_ROUTES } from '../../Router/constants';
 
+export const ABOUT_SUBMENU: MENU_ROUTES[] = [
+  MENU_ROUTES.Documents,
+  MENU_ROUTES.Standards,
+  MENU_ROUTES.Other,
+];
+
 export const NAVIGATION_MENU: MENU_ROUTES[] = [
   MENU_ROUTES.Home,
   MENU_ROUTES.Projects,
